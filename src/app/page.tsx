@@ -3,7 +3,7 @@ import { Button } from '@/components/base'
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button>a</Button>
+      <Button variant={'outlined'} color='green'>a</Button>
     </main>
   )
 }
