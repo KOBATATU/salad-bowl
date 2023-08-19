@@ -17,11 +17,12 @@ module.exports = withMT({
     fontSize: {
       xs: '0.85rem',
       sm: '1rem',
-      base: '1.25rem',
+      base: '1.1rem',
       xl: '1.5rem',
       '2xl': '2rem',
       '3xl': '2.5rem',
       '4xl': '3rem',
+      '5xl': '3.5rem',
     }
   },
   plugins: [],
