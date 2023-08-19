@@ -1,8 +1,8 @@
 'use client'
 import React, {forwardRef} from "react";
 
-import type { ButtonStyleType } from './theme'
-import { ButtonDefaultStyle, variants, sizes, base } from './theme'
+import type { ButtonStyleType } from './style/theme'
+import { ButtonDefaultStyle, variants, sizes, base } from './style/theme'
 import { objectsToString } from '@/lib/objectsToString'
 import { tailwindMerge } from '@/lib/tailwindMerge'
 
