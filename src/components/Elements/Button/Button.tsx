@@ -6,10 +6,17 @@ import { ButtonDefaultStyle, variants, sizes, base } from './theme'
 import { objectsToString } from '@/lib/objectsToString'
 import { tailwindMerge } from '@/lib/tailwindMerge'
 
-type ButtonProps = Partial<ButtonStyleType> & React.ComponentProps<"button">
+type ButtonProps = Partial<Omit<ButtonStyleType,'base'>> & React.ComponentProps<"button">
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, color, size, className, children, ...rest }, ref) => { 
+  ({ 
+    variant, 
+    color, 
+    size, 
+    className, 
+    children, 
+    ...rest 
+  }, ref) => { 
     // 1: set props
     const buttonVariantProps = variant ?? ButtonDefaultStyle.variant
     const buttonColorProps = color ?? ButtonDefaultStyle.color
