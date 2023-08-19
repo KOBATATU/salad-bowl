@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import { Button, Typography } from '@/components/base'
-export default function Home() {
+import { Button}  from '@/components/Elements'
+import {Typography} from "@/components/Elements/Typography/Typography";
+export default function HomeButton() {
   return (
-    <main className="p-24">
-      <Button variant={'outlined'} color='green'>a</Button>
-      <Typography>hoge</Typography>
+    <main className="flex  p-24">
+      <Button size={'md'} variant={'outlined'} color={'secondary'}>これはsm</Button>
+      <Typography variant={'span'}>hoge</Typography>
     </main>
   )
 }
