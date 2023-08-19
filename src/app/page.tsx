@@ -1,9 +1,10 @@
 import Image from 'next/image'
-import { Button } from '@/components/base'
+import { Button, Typography } from '@/components/base'
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="p-24">
       <Button variant={'outlined'} color='green'>a</Button>
+      <Typography>hoge</Typography>
     </main>
   )
 }
