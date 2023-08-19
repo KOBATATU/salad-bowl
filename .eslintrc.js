@@ -2,7 +2,7 @@ module.exports = {
   "extends": [
     "next/core-web-vitals",
     "prettier",
-    'plugin:tailwindcss/recommended',
+    "plugin:tailwindcss/recommended",
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions":  {
