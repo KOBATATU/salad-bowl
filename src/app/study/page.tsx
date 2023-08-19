@@ -1,4 +1,4 @@
-import { Button}  from '@/components/study'
+import { Button}  from '@/components/Elements'
 export default function HomeButton() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
