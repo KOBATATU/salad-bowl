@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
+    "eslint": "eslint . --fix",
     "build-storybook": "storybook build"
   },
   "dependencies": {

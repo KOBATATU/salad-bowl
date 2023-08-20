@@ -1,5 +1,5 @@
-import { Button}  from '@/components/Elements'
-import {Typography} from "@/components/Elements/Typography/Typography";
+import { Button }  from '@/components/Elements'
+import { Typography } from '@/components/Elements/Typography/Typography'
 export default function HomeButton() {
   return (
     <main className="flex  p-24">

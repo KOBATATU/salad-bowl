@@ -1,7 +1,7 @@
-import {Meta, StoryObj} from "@storybook/react";
-import {Alert} from "@/components/Notifications";
-import {MdOutlineInfo, MdWarningAmber} from "react-icons/md";
-import {Typography} from "@/components/Elements";
+import { Meta, StoryObj } from '@storybook/react'
+import { MdOutlineInfo, MdWarningAmber } from 'react-icons/md'
+import { Typography } from '@/components/Elements'
+import { Alert } from '@/components/Notifications'
 
 const meta = {
   title: 'Elements/Alert',

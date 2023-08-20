@@ -1,6 +1,6 @@
 export const cardVariants = {
   contained: {
-    boxShadow: "shadow-md",
+    boxShadow: 'shadow-md',
   },
   outlined: {
     border: 'border',

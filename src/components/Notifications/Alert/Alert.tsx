@@ -1,8 +1,8 @@
-import {AlertDefaultStyle, AlertType, base} from "@/components/Notifications/Alert/style/theme";
-import {ComponentProps, forwardRef} from "react";
-import {objectsToString} from "@/lib/objectsToString";
-import {variants} from "@/components/Notifications/Alert/style/variants";
-import {tailwindMerge} from "@/lib/tailwindMerge";
+import { ComponentProps, forwardRef } from 'react'
+import { AlertDefaultStyle, AlertType, base } from '@/components/Notifications/Alert/style/theme'
+import { variants } from '@/components/Notifications/Alert/style/variants'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type AlertProps = Partial<AlertType> & ComponentProps<'div'>
 
