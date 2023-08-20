@@ -17,4 +17,10 @@ export const Primary: Story = {
   render: (args) => {
     return <Button {...args}>HOGE</Button>
   }
-};
+}
+
+export const Diabled: Story = {
+  render: (args) => {
+    return <Button disabled {...args}>HOGE</Button>
+  }
+}

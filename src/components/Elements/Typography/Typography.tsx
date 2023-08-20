@@ -1,9 +1,9 @@
 import {createElement, forwardRef} from "react";
-import {TypographyDefaultProps, TypographyType} from "@/components/Elements/Typography/theme";
-import {variants} from "@/components/Elements/Typography/variants";
+import {TypographyDefaultProps, TypographyType} from "@/components/Elements/Typography/style/theme";
+import {variants} from "@/components/Elements/Typography/style/variants";
 import {objectsToString} from "@/lib/objectsToString";
 import {tailwindMerge} from "@/lib/tailwindMerge";
-import typographyColors from "@/components/Elements/Typography/colors";
+import typographyColors from "@/components/Elements/Typography/style/colors";
 
 type TypographyProps = Partial<TypographyType>
 
