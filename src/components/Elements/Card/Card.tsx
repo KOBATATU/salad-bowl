@@ -7,7 +7,15 @@ import {tailwindMerge} from "@/lib/tailwindMerge";
 type CardProps = Partial<Omit<CardType, 'base'>> & ComponentProps<'div'>
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ variant, className, children,  ...rest }, ref) => {
+  (
+    { 
+      variant, 
+      className, 
+      children,  
+      ...rest 
+    }, 
+    ref
+  ) => {
     // 1: set props
     const cardVariantProps = variant ?? CardDefaultStyle.variant
 
