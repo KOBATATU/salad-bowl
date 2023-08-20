@@ -1,22 +1,22 @@
 
 // 1: style base
-import {cardVariants} from "@/components/Elements/Card/style/variants";
+import { cardVariants } from '@/components/Elements/Card/style/variants'
 
 export const cardBase = {
-  position: "relative",
-  display: "flex",
-  flexDirection: "flex-col",
-  backgroundClip: "bg-clip-border",
-  borderRadius: "rounded-xl",
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'flex-col',
+  backgroundClip: 'bg-clip-border',
+  borderRadius: 'rounded-xl',
   color: 'bg-white'
 }
 
 export const cardHeaderBase = {
-  position: "relative",
-  backgroundClip: "bg-clip-border",
-  mt: "mt-4",
-  mx: "mx-4",
-  overflow: "overflow-hidden",
+  position: 'relative',
+  backgroundClip: 'bg-clip-border',
+  mt: 'mt-4',
+  mx: 'mx-4',
+  overflow: 'overflow-hidden',
 }
 
 export const cardBodyBase = {
@@ -46,8 +46,8 @@ export type CardBodyType = {
 
 export const footerDivider = {
   divider: {
-    borderWidth: "border-t",
-    borderColor: "border-blue-gray-50",
+    borderWidth: 'border-t',
+    borderColor: 'border-blue-gray-50',
   }
 }
 export type CardFooterType = {
@@ -58,7 +58,7 @@ export type CardFooterType = {
 
 // 3: Card Default Style
 export const CardDefaultStyle: CardType = {
-  variant: "contained",
+  variant: 'contained',
   base: cardBase
 }
 

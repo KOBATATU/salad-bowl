@@ -1,6 +1,6 @@
-import { ReactNode} from "react";
-import {variants} from "@/components/Elements/Typography/style/variants";
-import typographyColors from "@/components/Elements/Typography/style/colors";
+import { ReactNode } from 'react'
+import typographyColors from '@/components/Elements/Typography/style/colors'
+import { variants } from '@/components/Elements/Typography/style/variants'
 
 // 1: Typography Type
 export type TypographyType = {

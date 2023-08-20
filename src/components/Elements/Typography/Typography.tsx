@@ -1,9 +1,9 @@
-import {createElement, forwardRef} from "react";
-import {TypographyDefaultProps, TypographyType} from "@/components/Elements/Typography/style/theme";
-import {variants} from "@/components/Elements/Typography/style/variants";
-import {objectsToString} from "@/lib/objectsToString";
-import {tailwindMerge} from "@/lib/tailwindMerge";
-import typographyColors from "@/components/Elements/Typography/style/colors";
+import { createElement, forwardRef } from 'react'
+import typographyColors from '@/components/Elements/Typography/style/colors'
+import { TypographyDefaultProps, TypographyType } from '@/components/Elements/Typography/style/theme'
+import { variants } from '@/components/Elements/Typography/style/variants'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type TypographyProps = Partial<TypographyType>
 
@@ -52,7 +52,7 @@ export const Typography = forwardRef<Omit<HTMLButtonElement, 'color'>, Typograph
       case 'span':
         return createElement(typographyAsProps || 'span', commonProps, children)
       }
-    };
+    }
 
     return element(typographyVariantProps)
   }

@@ -1,12 +1,12 @@
+import { ComponentProps, forwardRef } from 'react'
 import {
   CardBodyDefaultStyle,
   CardFooterDefaultStyle,
   CardFooterType,
   footerDivider
-} from "@/components/Elements/Card/style/theme";
-import {ComponentProps, forwardRef} from "react";
-import {objectsToString} from "@/lib/objectsToString";
-import {tailwindMerge} from "@/lib/tailwindMerge";
+} from '@/components/Elements/Card/style/theme'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type CardFooterProps = Partial<CardFooterType> & ComponentProps<'div'>
 

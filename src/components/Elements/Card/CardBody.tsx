@@ -1,7 +1,7 @@
-import {ComponentProps, forwardRef} from "react";
-import {CardBodyDefaultStyle, CardBodyType} from "@/components/Elements/Card/style/theme";
-import {objectsToString} from "@/lib/objectsToString";
-import {tailwindMerge} from "@/lib/tailwindMerge";
+import { ComponentProps, forwardRef } from 'react'
+import { CardBodyDefaultStyle, CardBodyType } from '@/components/Elements/Card/style/theme'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type CardBodyProps = Partial<CardBodyType> & ComponentProps<'div'>
 

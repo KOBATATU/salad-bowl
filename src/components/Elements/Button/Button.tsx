@@ -1,12 +1,12 @@
 'use client'
-import React, {forwardRef} from "react";
+import React, { forwardRef } from 'react'
 
 import type { ButtonStyleType } from './style/theme'
 import { ButtonDefaultStyle, variants, sizes, base } from './style/theme'
 import { objectsToString } from '@/lib/objectsToString'
 import { tailwindMerge } from '@/lib/tailwindMerge'
 
-type ButtonProps = Partial<Omit<ButtonStyleType,'base'>> & React.ComponentProps<"button">
+type ButtonProps = Partial<Omit<ButtonStyleType,'base'>> & React.ComponentProps<'button'>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ 

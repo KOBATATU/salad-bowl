@@ -1,7 +1,7 @@
-import {CardHeaderDefaultStyle, CardHeaderType} from "@/components/Elements/Card/style/theme";
-import {ComponentProps, forwardRef} from "react";
-import {tailwindMerge} from "@/lib/tailwindMerge";
-import {objectsToString} from "@/lib/objectsToString";
+import { ComponentProps, forwardRef } from 'react'
+import { CardHeaderDefaultStyle, CardHeaderType } from '@/components/Elements/Card/style/theme'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type CardHeaderProps = Partial<CardHeaderType> & ComponentProps<'div'>
 

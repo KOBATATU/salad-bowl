@@ -1,16 +1,16 @@
 // 1: style base
 
-import {variants} from "@/components/Notifications/Alert/style/variants";
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
+import { variants } from '@/components/Notifications/Alert/style/variants'
 
 export const base = {
-  position: "relative",
-  display: "flex",
-  width: "w-full",
-  fontSize: "text-base",
-  fontWeight: "font-regular",
+  position: 'relative',
+  display: 'flex',
+  width: 'w-full',
+  fontSize: 'text-base',
+  fontWeight: 'font-regular',
   p: 'p-4',
-  borderRadius: "rounded-lg",
+  borderRadius: 'rounded-lg',
 }
 
 // 2: Alert Type

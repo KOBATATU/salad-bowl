@@ -1,8 +1,8 @@
-import {CardDefaultStyle, CardType} from "@/components/Elements/Card/style/theme";
-import {ComponentProps, forwardRef} from "react";
-import {objectsToString} from "@/lib/objectsToString";
-import {cardVariants} from "@/components/Elements/Card/style/variants";
-import {tailwindMerge} from "@/lib/tailwindMerge";
+import { ComponentProps, forwardRef } from 'react'
+import { CardDefaultStyle, CardType } from '@/components/Elements/Card/style/theme'
+import { cardVariants } from '@/components/Elements/Card/style/variants'
+import { objectsToString } from '@/lib/objectsToString'
+import { tailwindMerge } from '@/lib/tailwindMerge'
 
 type CardProps = Partial<Omit<CardType, 'base'>> & ComponentProps<'div'>
 
