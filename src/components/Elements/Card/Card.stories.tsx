@@ -15,7 +15,7 @@ export const SimpleCard: Story = {
   render: (args) => {
     return (
       <div className={'bg-slate-200 p-5'}>
-        <Card className={'max-w-md'}>
+        <Card {...args} className={'max-w-md'}>
           <CardHeader>
             <img alt={'サラダ'} src={'https://3.bp.blogspot.com/-8lpZHuv2KT8/V5NEcbV6EFI/AAAAAAAA8jE/AP6PjY_yGNQojTftM10ieg2zW6vv2Pp4wCLcB/s800/salad_reisyabu.png'} />
           </CardHeader>
