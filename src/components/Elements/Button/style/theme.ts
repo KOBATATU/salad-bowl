@@ -1,5 +1,5 @@
 import { variants } from './variants'
-// 1: style config
+// 1: style base
 export const sizes = {
   sm: {
     fontSize: "text-xs",
