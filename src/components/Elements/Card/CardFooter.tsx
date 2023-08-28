@@ -15,8 +15,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
     {
       divider, 
       className, 
-      children
-      , 
+      children,
       ...rest 
     }, 
     ref
