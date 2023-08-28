@@ -29,6 +29,7 @@ export const base = {
   textTransform: 'uppercase',
   transition: 'transition-all',
   disabled: 'disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none',
+  widthFull: 'w-full'
 }
 
 // 2: Button Type

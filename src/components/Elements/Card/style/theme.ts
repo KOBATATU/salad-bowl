@@ -24,7 +24,8 @@ export const cardBodyBase = {
 }
 
 export const cardFooterBase = {
-  p: 'p-3'
+  p: 'px-6',
+  px: 'pb-6'
 }
 
 // 2: Card Type
