@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Axios from 'axios'
+import { loggerDebug, loggerError } from '@/infrastructure/logging'
 
 export const pokemonAxios = axios.create({
   baseURL: 'https://pokeapi.co/api/',
@@ -7,22 +9,29 @@ export const pokemonAxios = axios.create({
   }
 })
 
+const prefixRequest = '[Request] '
+const prefixResponse = '[Response] '
 pokemonAxios.interceptors.request.use( (config) => {
-  // TODO: ログを仕込む
+  loggerDebug({ path: config.url, message: prefixRequest })
   return config
 },  (error) => {
-  // TODO: ログを仕込む
+  if(Axios.isAxiosError(error) && error.response) {
+    loggerError({ status: error.response.status, message: prefixRequest + error.message, path: error.config?.url })
+  } else {
+    loggerError({ status: 500, message: prefixRequest + `予期せぬエラーが発生しました ${error}` })
+  }
   return Promise.reject(error)
 })
 
-
 pokemonAxios.interceptors.response.use( (response) => {
-  // TODO: ログを仕込む
-  console.log('hoge')
+  loggerDebug({ status: response.status, message: prefixResponse + response.statusText, path: response.config.url })
   return response
 },  (error) => {
-  // TODO: ログを仕込む
-  // console.log(error)
+  if(Axios.isAxiosError(error) && error.response) {
+    loggerError({ status: error.response.status, message: prefixResponse +  error.message, path: error.config?.url })
+  } else {
+    loggerError({ status: 500, message: prefixResponse + `予期せぬエラーが発生しました ${error}` })
+  }
   return Promise.reject(error)
 })
 
