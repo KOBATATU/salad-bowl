@@ -4,7 +4,10 @@ import { cache } from 'react'
 export const getQueryClient = cache(() => new QueryClient({
   defaultOptions: {
     queries: {
-      retry: false
+      retry: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus:false
     }
   }
 }))

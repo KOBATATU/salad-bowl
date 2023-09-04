@@ -1,6 +1,6 @@
 import { QueryClient, useQuery } from '@tanstack/react-query'
 import { clientPokemonAxios } from '@/service/lib/clientPokemonAxios'
-import {loggerDebug} from "@/infrastructure/logging";
+import { useFetch } from '@/service/lib/queryService/useFetch'
 
 const getPokemon = async (pokemonName: string) => {
   const data = await clientPokemonAxios.get(`v2/pokemon/${pokemonName}`)
@@ -18,14 +18,11 @@ export const pokemonService = {
   },
 
   /**
-   * 
+   * ポケモン一匹を名前から取得する
+   * @param pokemonName
    */
   usePokemonByName: (pokemonName: string)=>{
-    return useQuery(
-      ['pokemon', pokemonName], 
-      ()=>getPokemon(pokemonName),
-      {
-        enabled: pokemonName !== undefined
-      })
+    return useFetch(['pokemon', pokemonName], getPokemon, { enabled: pokemonName !== undefined })
+    
   }
 }

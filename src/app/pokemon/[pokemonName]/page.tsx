@@ -1,6 +1,6 @@
 import { dehydrate, Hydrate } from '@tanstack/react-query'
 import { RootContainer } from '@/features/pokemon/[pokemon]/components/RootContainer'
-import { getQueryClient } from '@/service/lib/queryClient'
+import { getQueryClient } from '@/service/lib/queryClient/queryClient'
 import { pokemonService } from '@/service/pokemon/pokemonService'
 
 type PokemonProps = { params: { pokemonName: string } }
