@@ -1,12 +1,16 @@
 import axios from 'axios'
 import Axios from 'axios'
 import { loggerDebug, loggerError } from '@/infrastructure/logging'
+import http from "http";
+import https from "https";
 
 export const pokemonAxios = axios.create({
   baseURL: 'https://pokeapi.co/api/',
   headers: {
     'content-type': 'application/json'
-  }
+  },
+  httpAgent: new http.Agent({ keepAlive: true }),
+  httpsAgent: new https.Agent({ keepAlive: true }),
 })
 
 const prefixRequest = '[Request] '
