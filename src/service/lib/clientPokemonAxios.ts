@@ -1,6 +1,6 @@
+import * as http from 'http'
+import * as https from 'https'
 import axios from 'axios'
-import * as http from "http";
-import * as https from "https";
 
 
 export const clientPokemonAxios = axios.create({

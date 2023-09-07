@@ -8,7 +8,7 @@ type PokemonProps = { params: { pokemonName: string } }
 export default async function PokemonPage({ params }: PokemonProps) {
 
   const queryClient = getQueryClient()
-  await pokemonService.prefetchPokemonByName(queryClient, params.pokemonName)
+  await pokemonService.prefetchPokemonByName(params.pokemonName)
   const dehydratedState = dehydrate(queryClient)
   return (
     <Hydrate state={dehydratedState}>
