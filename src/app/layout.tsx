@@ -1,4 +1,5 @@
 import './globals.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { QueryClientProviders } from '@/service/lib/queryClient/QueryClientProviders'
@@ -17,7 +18,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryClientProviders> 
-          {children} 
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProviders>
       </body>
     </html>

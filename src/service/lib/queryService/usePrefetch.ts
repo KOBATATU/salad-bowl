@@ -1,4 +1,3 @@
-import { QueryKey } from '@tanstack/query-core'
 import { UseQueryOptions } from '@tanstack/react-query'
 import { getQueryClient } from '@/service/lib/queryClient/queryClient'
 
@@ -11,7 +10,7 @@ import { getQueryClient } from '@/service/lib/queryClient/queryClient'
 export const prefetch = async <
   TQueryFnData,
   TError,
-  TQueryKey extends QueryKey = QueryKey,
+  TQueryKey extends [string, (Record<string, unknown> | string)?],
   TData = TQueryFnData
 >(  queryKey: TQueryKey,
   fetcher: (params: TQueryKey[1]) => Promise<TQueryFnData>,
@@ -20,12 +19,9 @@ export const prefetch = async <
     'queryKey' | 'queryFn'
   >) => {
 
-  const queryClient =  getQueryClient()
-
-  await queryClient.prefetchQuery({
+  await getQueryClient().prefetchQuery({
     queryKey,
     queryFn: async () => fetcher(queryKey[1]),
-    staleTime: 60 * 1000,
     ...options,
   })
 }

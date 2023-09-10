@@ -1,4 +1,3 @@
-import { QueryKey } from '@tanstack/query-core'
 import { useQuery } from '@tanstack/react-query'
 import type { UseQueryOptions } from '@tanstack/react-query'
 
@@ -12,7 +11,7 @@ import type { UseQueryOptions } from '@tanstack/react-query'
 export const useFetch = <
   TQueryFnData,
   TError,
-  TQueryKey extends QueryKey = QueryKey,
+  TQueryKey extends [string, (Record<string, unknown> | string)?],
   TData = TQueryFnData
 >(
     queryKey: TQueryKey,

@@ -1,10 +1,9 @@
-import { QueryKey } from '@tanstack/query-core'
 import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query'
 
 export const useOptimisticMutate = <
   TData,
   TVariables,
-  TQueryKey extends QueryKey = QueryKey,
+  TQueryKey extends [string, (Record<string, unknown> | string)?],
   TContext = unknown,
 >(
     queryKey: TQueryKey,
