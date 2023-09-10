@@ -25,6 +25,7 @@ export const prefetch = async <
   await queryClient.prefetchQuery({
     queryKey,
     queryFn: async () => fetcher(queryKey[1]),
+    staleTime: 60 * 1000,
     ...options,
   })
 }
