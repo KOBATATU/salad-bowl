@@ -2,7 +2,7 @@ import './globals.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { QueryClientProviders } from '@/service/lib/queryClient/QueryClientProviders'
+import { QueryClientProviders } from '@/components/TanstackQueryClient/QueryClientProviders'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {

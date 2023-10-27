@@ -1,8 +1,8 @@
 import { ComponentProps, forwardRef } from 'react'
 import { AccordionContextProvider } from '@/components/Elements/Accordion/AccordionContext'
 import { AccordionType, base } from '@/components/Elements/Accordion/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type AccordionProps = AccordionType & ComponentProps<'div'>
 

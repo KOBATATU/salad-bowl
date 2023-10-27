@@ -1,7 +1,7 @@
 import { ComponentProps, forwardRef } from 'react'
 import { listBase, ListStyleType } from '@/components/Elements/List/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type ListProps = Partial<ListStyleType> & ComponentProps<'div'>
 

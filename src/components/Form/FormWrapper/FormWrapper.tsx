@@ -1,8 +1,8 @@
 import { ComponentProps, forwardRef } from 'react'
 import { Typography } from '@/components/Elements'
 import { base, FormWrapperDefaultStyle, FormWrapperType } from '@/components/Form/FormWrapper/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type FormWrapperProps = FormWrapperType & ComponentProps<'div'>
 

@@ -2,8 +2,8 @@ import { domAnimation, LazyMotion, m, MotionProps } from 'framer-motion'
 import { forwardRef } from 'react'
 import { useAccordion } from '@/components/Elements/Accordion/AccordionContext'
 import { AccordionBodyType, base } from '@/components/Elements/Accordion/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type AccordionBodyProps = AccordionBodyType & Omit<MotionProps, 'children'>
 

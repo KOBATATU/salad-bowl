@@ -1,5 +1,5 @@
 import { UseQueryOptions } from '@tanstack/react-query'
-import { getQueryClient } from '@/service/lib/queryClient/queryClient'
+import { getQueryClient } from '@/infrastructure/queryClient'
 
 /**
  * hydarateするときにprefetchをする

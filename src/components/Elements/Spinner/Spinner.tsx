@@ -1,8 +1,8 @@
 import { ComponentProps, forwardRef } from 'react'
 import { spinnerColors } from '@/components/Elements/Spinner/style/colors'
 import { spinnerBase, SpinnerType } from '@/components/Elements/Spinner/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type SpinnerProps = SpinnerType & ComponentProps<'svg'>
 
