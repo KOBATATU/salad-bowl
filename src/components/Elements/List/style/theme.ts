@@ -1,7 +1,4 @@
 // 1: style base
-import { ButtonDefaultStyle } from '@/components/Elements/Button/style/theme'
-import {boolean} from "zod";
-
 export const listBase = {
   display: 'flex',
   flexDirection: 'flex-col',
