@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react'
 import { chipBase, ChipStyleType, defaultChipStyle, sizes } from '@/components/Elements/Chip/style/theme'
 import { variants } from '@/components/Elements/Chip/style/variants'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type ChipProps = ChipStyleType & React.ComponentProps<'button'>
 

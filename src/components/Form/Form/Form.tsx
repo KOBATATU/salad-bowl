@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as React from 'react'
 import { useForm, UseFormReturn, SubmitHandler, UseFormProps } from 'react-hook-form'
 import { ZodType, ZodTypeDef } from 'zod'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 // 参考：https://github.com/alan2207/bulletproof-react/blob/master/src/components/Form/Form.tsx
 type FormProps<TFormValues extends Record<string, unknown>, Schema> = {

@@ -4,8 +4,8 @@ import {
   ListItemDefaultStyle,
   ListItemStyleType,
 } from '@/components/Elements/List/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 type ListItemProps = Partial<ListItemStyleType> & ComponentProps<'div'>
 
 export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(

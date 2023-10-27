@@ -2,8 +2,8 @@ import { createElement, forwardRef } from 'react'
 import typographyColors from '@/components/Elements/Typography/style/colors'
 import { TypographyDefaultProps, TypographyType } from '@/components/Elements/Typography/style/theme'
 import { variants } from '@/components/Elements/Typography/style/variants'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type TypographyProps = Partial<TypographyType>
 

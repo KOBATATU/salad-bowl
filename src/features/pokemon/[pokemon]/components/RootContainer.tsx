@@ -6,7 +6,7 @@ import { pokemonService } from '@/service/pokemon/pokemonService'
 
 type RootContainerProps = { params: { pokemonName: string } }
 export const RootContainer = ({ params }: RootContainerProps)=>{
-  const { data, isLoading } = pokemonService.usePokemonByName(params.pokemonName)
+  const { data, isLoading } = pokemonService.useGetPokemonByName(params.pokemonName)
   const queryClient = useQueryClient()
 
   return (

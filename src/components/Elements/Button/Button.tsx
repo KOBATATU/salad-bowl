@@ -3,8 +3,8 @@ import React, { forwardRef } from 'react'
 
 import type { ButtonStyleType } from './style/theme'
 import { ButtonDefaultStyle, variants, sizes, base } from './style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type ButtonProps = Partial<Omit<ButtonStyleType,'base'>> & React.ComponentProps<'button'>
 

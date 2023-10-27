@@ -1,6 +1,6 @@
-import { clientPokemonAxios } from '@/service/lib/clientPokemonAxios'
-import { useFetch } from '@/service/lib/queryService/useFetch'
-import { prefetch } from '@/service/lib/queryService/usePrefetch'
+import { clientPokemonAxios } from '@/service/clientPokemonAxios'
+import { useFetch } from '@/service/queryService/useFetch'
+import { prefetch } from '@/service/queryService/usePrefetch'
 
 const getPokemon = async (pokemonName: string) => {
   const data = await clientPokemonAxios.get(`v2/pokemon/${pokemonName}`)
@@ -21,8 +21,7 @@ export const pokemonService = {
    * ポケモン一匹を名前から取得する
    * @param pokemonName
    */
-  usePokemonByName: (pokemonName: string)=>{
+  useGetPokemonByName: (pokemonName: string)=>{
     return useFetch(['pokemon', pokemonName], getPokemon, { enabled: pokemonName !== undefined })
-    
   }
 }

@@ -1,7 +1,7 @@
 import { ComponentProps, forwardRef } from 'react'
 import { base, InputDefault, inputError, InputType, sizes } from '@/components/Form/Input/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type InputProps = Partial<InputType> & Omit<ComponentProps<'input'>, 'size'>
 

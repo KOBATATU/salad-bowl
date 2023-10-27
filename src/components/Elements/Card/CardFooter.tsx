@@ -5,8 +5,8 @@ import {
   CardFooterType,
   footerDivider
 } from '@/components/Elements/Card/style/theme'
-import { objectsToString } from '@/lib/objectsToString'
-import { tailwindMerge } from '@/lib/tailwindMerge'
+import { objectsToString } from '@/utils/objectsToString'
+import { tailwindMerge } from '@/utils/tailwindMerge'
 
 type CardFooterProps = Partial<CardFooterType> & ComponentProps<'div'>
 

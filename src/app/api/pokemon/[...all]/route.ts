@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { NextRequest, NextResponse } from 'next/server'
-import { extractPokemonPath, pokemonAxios } from '@/infrastructure/bff/pokemonProxy'
+import { extractPokemonPath, pokemonAxios } from '@/infrastructure/bff/backendPokemonAxios'
 
 export const GET = async (req: NextRequest) => {
   // 1: extract Pokémon path
