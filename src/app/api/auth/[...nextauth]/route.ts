@@ -6,6 +6,7 @@ type ClientType = {
   clientSecret: string;
 }
 
+
 const authOption: NextAuthOptions = {
   providers: [
     GithubProvider({
@@ -14,9 +15,9 @@ const authOption: NextAuthOptions = {
     } as ClientType)
   ],
   pages: {
-    signIn: 'auth/login'
+    signIn: '/auth/login'
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET
 }
 
 const handler = NextAuth(authOption)

@@ -11,7 +11,7 @@ export const Login = () => {
           <Typography variant={'span'} className={'mt-5 block'}>ログインをして早速サイトを使ってみましょう！</Typography>
         </CardHeader>
         <CardBody className={'flex items-center justify-center'}>
-          <Button color={'primary'} variant={'outlined'} className={'flex items-center justify-center gap-2'} onClick={()=> signIn('github')}>
+          <Button color={'primary'} variant={'outlined'} className={'flex items-center justify-center'} onClick={()=> signIn('github')}>
             <img className="h-6 w-6" src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" loading="lazy" alt="google logo" />
             <span>Login with github</span>
           </Button>
