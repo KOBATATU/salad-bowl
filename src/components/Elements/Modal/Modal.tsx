@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import { modalDefault, ModalProps, sizes } from '@/components/Elements/Modal/style/theme'
+import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
-import { modalDefault, ModalProps, sizes} from "@/components/Elements/Modal/style/theme";
-import {objectsToString} from "@/utils/objectsToString";
 
 export const Modal = ({ isOpen, closeModal, size, children, modalClassName }: ModalProps)=>{
 

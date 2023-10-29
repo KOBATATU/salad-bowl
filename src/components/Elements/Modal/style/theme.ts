@@ -1,5 +1,5 @@
 // 1: style base
-import {Dispatch, ReactNode, SetStateAction} from "react";
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 export const sizes = {
   xs: {
