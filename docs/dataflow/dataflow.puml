@@ -1,0 +1,16 @@
+@startuml
+participant "Page Information" as Page
+participant "Root Container" as RootContainer
+participant "OO Container" as OOContainer
+participant "Hook" as Hook
+participant "Service" as Service
+participant "OO Presentation" as OOPresentation
+participant "Infrastructure" as Infrastructure
+
+Page -> RootContainer: アクセス
+RootContainer -> OOContainer: アクセス
+OOContainer -> Hook: アクセス
+Hook -> Service: アクセス
+Service -> Infrastructure: アクセス
+OOContainer -> OOPresentation: アクセス
+@enduml
