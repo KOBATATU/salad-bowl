@@ -1,15 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Dispatch, Fragment, ReactNode, SetStateAction } from 'react'
+import { Fragment } from 'react'
 import { tailwindMerge } from '@/utils/tailwindMerge'
+import { modalDefault, ModalProps, sizes} from "@/components/Elements/Modal/style/theme";
+import {objectsToString} from "@/utils/objectsToString";
 
-type ModalProps = {
-  isOpen: boolean,
-  closeModal: Dispatch<SetStateAction<boolean>>,
-  children?: ReactNode,
-  modalClassName?: string
-}
+export const Modal = ({ isOpen, closeModal, size, children, modalClassName }: ModalProps)=>{
 
-export const Modal = ({ isOpen, closeModal, children, modalClassName }: ModalProps)=>{
+  // 1: set props
+  const modalSizeProp = size ?? modalDefault.size
+
+  // 2: set style
+  const base = objectsToString(modalDefault.base)
+  const mosalSize = objectsToString(sizes[modalSizeProp])
+  const classNames = tailwindMerge(base, mosalSize, modalClassName)
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -37,7 +40,7 @@ export const Modal = ({ isOpen, closeModal, children, modalClassName }: ModalPro
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className={tailwindMerge('w-full max-w-md rounded-2xl bg-white p-6 shadow-xl', modalClassName)}>
+            <Dialog.Panel className={classNames}>
               {children}
             </Dialog.Panel>
           </Transition.Child>

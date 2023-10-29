@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     isOpen: false,
+    size: 'md',
     closeModal:  ()=> {}
   },
   render: (args) => {
@@ -40,8 +41,8 @@ export const Default: Story = {
             Open dialog
           </button>
         </div>
-        <Modal isOpen={isOpen} closeModal={closeModal} >
-          <div className="mt-2">
+        <Modal isOpen={isOpen} closeModal={closeModal} size={args.size}>
+          <div className="mt-2 text-center">
             <p className="text-sm text-gray-500">
               サンプルのモーダルです.
               <a href={'https://headlessui.com/react/dialog'}>headless uiを用いてmodalを作成しています</a>
