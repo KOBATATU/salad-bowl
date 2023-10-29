@@ -21,6 +21,10 @@ Reactを使ってのアプリケーション構築はnext.tsの開発やその�
 開発したコンポーネントは以下で確認できる
 - https://simple-tailwind-component.netlify.app/
 
+## ドキュメント
+
+[ドキュメント](./docs)
+
 ## 参考
 - https://www.material-tailwind.com/
 - https://github.com/alan2207/bulletproof-react
