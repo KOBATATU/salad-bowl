@@ -1,11 +1,11 @@
-import { domAnimation, LazyMotion, m, MotionProps } from 'framer-motion'
-import { forwardRef } from 'react'
+import { Transition } from '@headlessui/react'
+import { ComponentProps, forwardRef } from 'react'
 import { useAccordion } from '@/components/Elements/Accordion/AccordionContext'
 import { AccordionBodyType, base } from '@/components/Elements/Accordion/style/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type AccordionBodyProps = AccordionBodyType & Omit<MotionProps, 'children'>
+type AccordionBodyProps = AccordionBodyType & ComponentProps<'div'>
 
 export const AccordionBody = forwardRef<HTMLDivElement, AccordionBodyProps>(
   (
@@ -23,32 +23,25 @@ export const AccordionBody = forwardRef<HTMLDivElement, AccordionBodyProps>(
     // 2: accordion props
     const { open } = useAccordion()
 
-    // 3. set animation
-    const heightAnimation = {
-      unmount: {
-        height: '0px',
-        transition: { duration: 0.2, times: [0.4, 0, 0.2, 1] },
-      },
-      mount: {
-        height: 'auto',
-        transition: { duration: 0.2, times: [0.4, 0, 0.2, 1] },
-      },
-    }
-
     return (
-      <LazyMotion features={domAnimation}>
-        <m.div
-          className={'overflow-hidden'}
-          initial="unmount"
-          exit="unmount"
-          animate={open ? 'mount' : 'unmount'}
-          variants={heightAnimation}
+      <Transition
+        as={'div'}
+        show={open}
+        enter="transition-all duration-200"
+        enterFrom="max-h-0"
+        enterTo="max-h-96"
+        leave="transition-all duration-200"
+        leaveFrom="max-h-96"
+        leaveTo="max-h-0"
+        className={'overflow-hidden'}
+      >
+        <div
+          {...rest}
+          className={classNames}
         >
-          <m.div {...rest} ref={ref} className={classNames}>
-            { children }
-          </m.div>
-        </m.div>
-      </LazyMotion>
+          {children}
+        </div>
+      </Transition>
     )
   }
 )
