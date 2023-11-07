@@ -1,26 +1,15 @@
-import { TypeORMAdapter } from '@auth/typeorm-adapter'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { PrismaClient } from '@prisma/client'
 import { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
-import { ConnectionOptions } from 'typeorm'
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 type ClientType = {
   clientId: string;
   clientSecret: string;
 }
-
-const connection: ConnectionOptions = {
-  type: 'mysql',
-  host: process.env.DB_HOST,
-  port: 3306,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  namingStrategy: new SnakeNamingStrategy()
-}
-
+const prisma = new PrismaClient()
 export const authOption: NextAuthOptions = {
-  adapter: TypeORMAdapter(connection),
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'database',
   },
@@ -32,7 +21,13 @@ export const authOption: NextAuthOptions = {
   ],
   pages: {
     signIn: '/auth/login',
-    signOut: '/'
+    signOut: '/',
+    error: '/'
+  },
+  callbacks: {
+    async session({ session,  user }) {
+      return session
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 }
