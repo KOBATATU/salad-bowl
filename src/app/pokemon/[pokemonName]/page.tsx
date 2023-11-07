@@ -14,12 +14,8 @@ export default async function PokemonPage({ params }: PokemonProps) {
   if (!session) {
     redirect('/auth/login')
   }
-  
-  await pokemonService.prefetchPokemonByName(params.pokemonName)
-  const dehydratedState = dehydrate(getQueryClient())
+
   return (
-    <Hydrate state={dehydratedState}>
-      <RootContainer params={ { pokemonName: params.pokemonName }}/>
-    </Hydrate>
+    <RootContainer params={ { pokemonName: params.pokemonName }}/>
   )
 }

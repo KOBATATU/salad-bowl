@@ -1,19 +1,20 @@
-'use client'
-
-import { useQueryClient } from '@tanstack/react-query'
-import { Button } from '@/components/Elements'
+import { dehydrate, Hydrate } from '@tanstack/react-query'
+import { SuspenseLoading } from '@/components/Elements/Suspense/Suspense'
+import { PokemonContainer } from '@/features/pokemon/[pokemon]/components/Container/PokemonContainer'
+import { getQueryClient } from '@/infrastructure/queryClient'
 import { pokemonService } from '@/service/pokemon/pokemonService'
 
 type RootContainerProps = { params: { pokemonName: string } }
-export const RootContainer = ({ params }: RootContainerProps)=>{
-  const { data, isLoading } = pokemonService.useGetPokemonByName(params.pokemonName)
-  const queryClient = useQueryClient()
-
+export const RootContainer = async ({ params }: RootContainerProps)=>{
+  await pokemonService.prefetchPokemonByName(params.pokemonName)
+  const dehydratedState = dehydrate(getQueryClient())
   return (
     <>
-      { data && <div>{data.id}  <Button onClick={()=>  {
-        queryClient.invalidateQueries({ queryKey: ['pokemon', params.pokemonName ] })
-      }}>invalid</Button></div> }
+      <Hydrate state={dehydratedState}>
+        <SuspenseLoading>
+          <PokemonContainer params={params} />
+        </SuspenseLoading>
+      </Hydrate>
     </>
   )
 }
