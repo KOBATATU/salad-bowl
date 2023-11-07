@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - TZ=${TZ}
+    volumes:
+      - ./db/ddl:/docker-entrypoint-initdb.d
+      - ./db/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+    hostname: db
+
+
+volumes:
+  db-store:
