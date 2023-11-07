@@ -8,6 +8,7 @@ services:
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASS}
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - TZ=${TZ}
     volumes:
       - ./db/ddl:/docker-entrypoint-initdb.d
