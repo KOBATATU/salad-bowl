@@ -1,5 +1,5 @@
 // 1: style base
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
 
 export const base = {
   accordion: {

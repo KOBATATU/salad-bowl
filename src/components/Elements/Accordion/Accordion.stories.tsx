@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Accordion, AccordionBody, AccordionHeader } from "@/components/Elements/Accordion/"
+import { Accordion, AccordionBody, AccordionHeader } from '@/components/Elements/Accordion/'
 
 const meta = {
   title: 'Elements/Accordion',

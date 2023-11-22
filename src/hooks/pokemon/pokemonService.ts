@@ -1,6 +1,6 @@
-import { clientPokemonAxios } from '@/hooks/pokemon/clientPokemonAxios'
 import { useFetch } from '@/hooks/tanstack/useFetch'
 import { prefetch } from '@/hooks/tanstack/usePrefetch'
+import { clientPokemonAxios } from '@/utils/clientPokemonAxios'
 
 const getPokemon = async (pokemonName: string) => {
   const data = await clientPokemonAxios.get(`v2/pokemon/${pokemonName}`)

@@ -1,8 +1,8 @@
+import http from 'http'
+import https from 'https'
 import axios from 'axios'
 import Axios from 'axios'
 import { loggerDebug, loggerError } from '@/infrastructure/logging'
-import http from "http";
-import https from "https";
 
 export const pokemonAxios = axios.create({
   baseURL: 'https://pokeapi.co/api/',
