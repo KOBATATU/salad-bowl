@@ -2,7 +2,7 @@ import { dehydrate, Hydrate } from '@tanstack/react-query'
 import { SuspenseLoading } from '@/components/Elements/Suspense/Suspense'
 import { PokemonContainer } from '@/features/pokemon/[pokemon]/components/Container/PokemonContainer'
 import { getQueryClient } from '@/infrastructure/queryClient'
-import { pokemonService } from '@/service/pokemon/pokemonService'
+import { pokemonService } from '@/hooks/pokemon/pokemonService'
 
 type RootContainerProps = { params: { pokemonName: string } }
 export const RootContainer = async ({ params }: RootContainerProps)=>{

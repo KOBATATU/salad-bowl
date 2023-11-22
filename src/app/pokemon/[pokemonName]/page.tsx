@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth/next'
 import { RootContainer } from '@/features/pokemon/[pokemon]/components/RootContainer'
 import { authOption } from '@/infrastructure/nextAuthOptions'
 import { getQueryClient } from '@/infrastructure/queryClient'
-import { pokemonService } from '@/service/pokemon/pokemonService'
+import { pokemonService } from '@/hooks/pokemon/pokemonService'
 
 type PokemonProps = { params: { pokemonName: string } }
 
