@@ -1,4 +1,3 @@
-import Axios from 'axios'
 import { instanceOf } from 'prop-types'
 import { ErrorComponent } from '@/components/Layout/Error/Error'
 
@@ -19,10 +18,7 @@ export class ResponseError extends Error {
 }
 
 export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
-
-  if (Axios.isAxiosError(error)) {
-    return <ErrorComponent statusCode={error.response?.status}/>
-  } else if (instanceOf(ResponseError)) {
+  if (instanceOf(ResponseError)) {
     return <ErrorComponent  statusCode={error.getStatusCode} />
   }
 }
