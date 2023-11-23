@@ -1,13 +1,16 @@
 import pino from 'pino'
 
-type Option = {
+export type Option = {
   path?: string
   status?: number
   message?: string
+  time?: number
 }
 
 const pinoConfig = {
   level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
+  browser: 
+   { disabled: true },
   formatters: {
     level: (label: string) => {
       return {
