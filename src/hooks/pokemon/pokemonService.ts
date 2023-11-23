@@ -1,26 +1,10 @@
-import { ResponseError } from '@/components/Layout/Error/ErrorFallback'
 import { useFetch } from '@/hooks/tanstack/useFetch'
 import { prefetch } from '@/hooks/tanstack/usePrefetch'
-import {loggerInfo} from "@/infrastructure/logging";
+import { pokemonGetFetcher } from '@/utils/fetcher/pokemonFetcher'
 
-const hogeFetch = async (pokemonName: string) => {
-
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-  loggerInfo({  path: '',
-    status: response.status,
-    message: response.statusText })
-
-  if (!response.ok) {
-    throw new ResponseError(response.statusText, response.status)
-  }
-
-  return response
-}
 
 const getPokemon = async (pokemonName: string) => {
-  const response = await hogeFetch(pokemonName)
-
-  return response.json()
+  return await pokemonGetFetcher(`v2/pokemon/${pokemonName}`)
 
 }
 
