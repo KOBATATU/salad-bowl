@@ -10,6 +10,11 @@ export const getQueryClient = cache(() => new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
-      retry: false
+      retry: false,
     }
+  },
+  logger: {
+    log: () => {},
+    warn: () => {},
+    error: () => {},
   } }))

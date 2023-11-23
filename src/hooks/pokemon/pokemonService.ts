@@ -1,10 +1,27 @@
+import { ResponseError } from '@/components/Layout/Error/ErrorFallback'
 import { useFetch } from '@/hooks/tanstack/useFetch'
 import { prefetch } from '@/hooks/tanstack/usePrefetch'
-import { clientPokemonAxios } from '@/utils/clientPokemonAxios'
+import {loggerInfo} from "@/infrastructure/logging";
+
+const hogeFetch = async (pokemonName: string) => {
+
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+  loggerInfo({  path: '',
+    status: response.status,
+    message: response.statusText })
+
+  if (!response.ok) {
+    throw new ResponseError(response.statusText, response.status)
+  }
+
+  return response
+}
 
 const getPokemon = async (pokemonName: string) => {
-  const data = await clientPokemonAxios.get(`v2/pokemon/${pokemonName}`)
-  return data.data
+  const response = await hogeFetch(pokemonName)
+
+  return response.json()
+
 }
 
 export const pokemonService = {

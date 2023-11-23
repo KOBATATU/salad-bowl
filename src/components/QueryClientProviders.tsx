@@ -9,9 +9,12 @@ export const QueryClientProviders = ({ children }: { children: ReactNode }) => {
         staleTime: 60 * 1000,
         suspense: true,
         retry:false,
-        useErrorBoundary: true
-      }
-    } }))
+      } },
+    logger: {
+      log: () => {},
+      warn: () => {},
+      error: () => {},
+    } } ))
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   )
