@@ -5,7 +5,9 @@ const customJestConfig = {
   testPathIgnorePatterns: [ '<rootDir>/.next/', '<rootDir>/node_modules/'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleDirectories: ['node_modules', '<rootDir>/src'],
-  testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    customExportConditions: [''],
+  },
   reporters: [
     'default',
     [
