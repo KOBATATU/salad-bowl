@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth/next'
-import { RootContainer } from '@/features/pokemon/[pokemon]/components/RootContainer'
+import { RootContainer } from '@/features/pokemon/[pokemon]/components/Container/RootContainer'
 import { authOption } from '@/infrastructure/nextAuthOptions'
 
 type PokemonProps = { params: { pokemonName: string } }

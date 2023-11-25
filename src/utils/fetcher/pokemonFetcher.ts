@@ -2,7 +2,9 @@ import * as url from 'url'
 import { ResponseError } from '@/components/Layout/Error/ErrorFallback'
 import { loggerError, loggerInfo, Option } from '@/infrastructure/logging'
 
-const pokemonURL = 'https://pokeapi.co/api/'
+const pokemonURL = '/api/proxy/pokemon/'
+// server side実行時はenvから. frontからではlocationを使ってhostnameを取得する
+const pokemonDomain = process.env.HOSTNAME !== undefined ? process.env.HOSTNAME : location.hostname
 
 export const pokemonGetFetcher = async <T = any,>(
   resource: string,
@@ -11,7 +13,7 @@ export const pokemonGetFetcher = async <T = any,>(
   // リクエスト開始時間を記録
   const startTime = performance.now()
   const path = url.resolve(pokemonURL, resource)
-  const res = await fetch(path,
+  const res = await fetch(url.resolve(pokemonDomain , path),
     { ...{
       method: 'GET',
       headers: {

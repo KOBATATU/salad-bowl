@@ -10,6 +10,7 @@ module.exports = {
   },
   'plugins': ['@typescript-eslint', 'tailwindcss'],
   'root': true,
+  ignorePatterns: ['jest.polyfills.js'],
   rules: {
     'react/jsx-indent': ['error', 2, { indentLogicalExpressions: true }],
     'react/jsx-indent-props': ['error', 2],
