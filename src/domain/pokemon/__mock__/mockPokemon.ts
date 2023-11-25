@@ -1,5 +1,3 @@
 export const mockPokemonPickachu = {
-  data :{
-    id: 25
-  }
+  id: 25
 }
