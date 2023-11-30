@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+import { ResponseError } from '@/components/Layout/Error/ErrorFallback'
 
 type ErrorProps = {
   statusCode?: number
@@ -17,6 +19,20 @@ const getErrorMessage = (statusCode?: number) => {
   }
   return errorMessage
 }
+
+export const componentErrorHandler = (error:unknown) => {
+  if (error instanceof ResponseError) {
+    switch (error.getStatusCode) {
+    case 404:
+      return notFound()
+    default:
+      return <ErrorComponent statusCode={error.getStatusCode}/>
+    }
+  } else {
+    return <ErrorComponent/>
+  }
+}
+
 
 export const ErrorComponent= ({ statusCode }: ErrorProps) => {
   const errorMessage = getErrorMessage(statusCode)

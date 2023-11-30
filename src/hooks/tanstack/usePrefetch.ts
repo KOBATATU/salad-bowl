@@ -19,7 +19,7 @@ export const prefetch = async <
     'queryKey' | 'queryFn'
   >) => {
 
-  await getQueryClient().prefetchQuery({
+  return await getQueryClient().fetchQuery({
     queryKey,
     queryFn: async () => fetcher(queryKey[1]),
     ...options,

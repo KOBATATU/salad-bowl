@@ -1,3 +1,4 @@
+'use client'
 import { ErrorComponent } from '@/components/Layout/Error/Error'
 
 export default function CustomError() {
