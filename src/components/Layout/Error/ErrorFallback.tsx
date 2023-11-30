@@ -18,7 +18,10 @@ export class ResponseError extends Error {
 }
 
 export const ErrorFallback = ({ error }: ErrorFallbackProps) => {
-  if (instanceOf(ResponseError)) {
+  if (error instanceof ResponseError) {
     return <ErrorComponent  statusCode={error.getStatusCode} />
+  } else {
+    return <ErrorComponent />
+
   }
 }

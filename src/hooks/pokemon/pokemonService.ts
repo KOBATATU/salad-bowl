@@ -15,7 +15,7 @@ export const pokemonService = {
    * @param pokemonName
    */
   prefetchPokemonByName: async (pokemonName: string)=>{
-    await prefetch(['pokemon', pokemonName], async () => await getPokemon(pokemonName))
+    return await prefetch(['pokemon', pokemonName], async () => await getPokemon(pokemonName))
   },
 
   /**
