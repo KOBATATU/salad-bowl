@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: 'ls'
+        run: ls
+
       - name: 'Cache npm dependencies'
         uses: actions/cache@v3
         with:
