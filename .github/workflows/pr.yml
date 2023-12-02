@@ -17,9 +17,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: 'ls'
-        run: ls
-
       - name: 'Cache npm dependencies'
         uses: actions/cache@v3
         with:
@@ -29,7 +26,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: 'Install Dependencies'
-        run: npm ci
+        run: npm install
 
       - name: 'Run Tests'
         run: npm run test
