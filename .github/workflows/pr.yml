@@ -42,3 +42,17 @@ jobs:
           name: test-coverage
           path: __reports__/**
           retention-days: 5
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Install SSH key'
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.AWS_SECRET_KEY }}
+          known_hosts: ${{ secrets.AWS_KNOWN_HOSTS }}
+      - name: 'deploy'
+        run: |
+          rsync -auzv ./ ${SERVER_USER}@${SERVER_IP}:~/salad-bowl
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}
