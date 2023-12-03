@@ -45,6 +45,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
       - name: 'Install SSH key'
         uses: shimataro/ssh-key-action@v2
         with:
