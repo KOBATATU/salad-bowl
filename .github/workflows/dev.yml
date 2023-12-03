@@ -1,0 +1,68 @@
+name: dev
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Setup node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 'Cache npm dependencies'
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 'Install Dependencies'
+        run: npm install
+
+      - name: 'Run Tests'
+        run:  npm run test
+        env:
+          API_POKEMON: 'https://pokeapi.co/api'
+          MY_HOSTNAME: 'http://localhost:3000'
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        # jobが失敗してもtest結果をartifactsに送りたいめ常に実行
+        if: always()
+        with:
+          name: test-coverage
+          path: __reports__/**
+          retention-days: 5
+  deploy:
+    needs: [test-build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Install SSH key'
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.AWS_SECRET_KEY }}
+          known_hosts: ${{ secrets.AWS_KNOWN_HOSTS }}
+      - name: 'deploy'
+        run: |
+          rsync -auzv ./ ${SERVER_USER}@${SERVER_IP}:~/salad-bowl
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}
+      - name: 'build-restart'
+        run: |
+          ssh ${SERVER_USER}@${SERVER_IP} 'cd ./salad-bowl && npm install && npm run build && pm2 restart salad'
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}

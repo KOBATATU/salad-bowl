@@ -4,7 +4,7 @@ import { loggerError, loggerInfo, Option } from '@/infrastructure/logging'
 
 const pokemonURL = '/api/proxy/pokemon/'
 // server side実行時はenvから. frontからではlocationを使ってhostnameを取得する
-const pokemonDomain = process.env.HOSTNAME !== undefined ? process.env.HOSTNAME : location.hostname
+const pokemonDomain = process.env.MY_HOSTNAME !== undefined ? process.env.MY_HOSTNAME : location.hostname
 
 export const pokemonGetFetcher = async <T = any,>(
   resource: string,
@@ -27,12 +27,12 @@ export const pokemonGetFetcher = async <T = any,>(
   // リクエスト終了時間を記録
   const endTime = performance.now()
   const logger:Option = { path: path, message:res.statusText, status: res.status, time: endTime - startTime }
-  
+
   if (!res.ok) {
     loggerError(logger)
     throw new ResponseError(res.statusText, res.status)
   }
-  
+
   loggerInfo(logger)
 
   return res.json()

@@ -10,7 +10,5 @@ describe('レンダリングテスト', () => {
       <PokemonContainer params={{ pokemonName: 'pickachu' }} />
     </QueryClientProvider>)
     expect(await screen.findByText('25')).toBeInTheDocument()
-    
-    screen.debug()
   })
 })
