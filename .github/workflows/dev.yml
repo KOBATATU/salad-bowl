@@ -1,7 +1,7 @@
-name: pr
+name: dev
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -42,3 +42,27 @@ jobs:
           name: test-coverage
           path: __reports__/**
           retention-days: 5
+  deploy:
+    needs: [test-build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Install SSH key'
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.AWS_SECRET_KEY }}
+          known_hosts: ${{ secrets.AWS_KNOWN_HOSTS }}
+      - name: 'deploy'
+        run: |
+          rsync -auzv ./ ${SERVER_USER}@${SERVER_IP}:~/salad-bowl
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}
+      - name: 'build-restart'
+        run: |
+          ssh ${SERVER_USER}@${SERVER_IP} 'cd ./salad-bowl && npm install && npm run build && pm2 restart salad'
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}
