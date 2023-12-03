@@ -59,3 +59,9 @@ jobs:
         env:
           SERVER_USER: ${{ secrets.SERVER_USER  }}
           SERVER_IP: ${{ secrets.SERVER_IP  }}
+      - name: 'build-restart'
+        run: |
+          ssh ${SERVER_USER}@${SERVER_IP} 'cd ./salad-bowl && npm run build && pm2 restart salad'
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER  }}
+          SERVER_IP: ${{ secrets.SERVER_IP  }}
