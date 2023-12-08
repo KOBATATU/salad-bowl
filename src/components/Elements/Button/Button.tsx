@@ -1,10 +1,69 @@
 'use client'
 import Ripple from 'material-ripple-effects'
-import React, { forwardRef } from 'react'
+import React, { forwardRef, ReactNode } from 'react'
+import { sizes } from '@/@types/style-type'
 import { Spinner } from '@/components/Elements'
-import { button, ButtonProps } from '@/components/Elements/Button/style/theme'
+import { button  } from '@/components/Elements/Button/theme'
+import { variants } from '@/components/Elements/Button/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
+
+export type ButtonProps = {
+  /**
+   * ボタンのスタイルの種類
+   */
+  variant?: keyof typeof variants
+
+  /**
+   * ボタンの色
+   */
+  color?: 'primary' | 'secondary' | 'white'
+
+  /**
+   * ボタンの大きさ
+   */
+  size?: sizes
+
+  /**
+   * `true`のとき、ボタンを正方形にする。
+   */
+  square?: boolean
+
+  /**
+   * `true`のとき、ボタンが押下で若干グレーになる
+   */
+  ripple?: boolean
+
+  /**
+   * `true`のとき、ボタンのコンテンツ内容がローディングに変更
+   */
+  loading?: boolean
+
+  /**
+   * `true`のとき、ボタンが100%になる
+   */
+  fullWidth?: boolean
+
+  /**
+   * ボタンの前につくIcon
+   */
+  prefixIcon?: ReactNode
+
+  /**
+   * ボタンの後につくIcon
+   */
+  suffixIcon?: ReactNode
+
+  /**
+   * `true`のとき、ボタンがdisabledになる
+   */
+  disabled?: boolean
+
+  /**
+   * ボタンにクラスを追加
+   */
+  className?: string
+}
 
 export const Button = forwardRef<HTMLButtonElement, Omit<React.ComponentProps<'button'>,'className' | 'disabled'> & ButtonProps>(
   ({

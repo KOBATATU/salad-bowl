@@ -1,63 +1,6 @@
-import { ReactNode } from 'react'
 import { variants } from './variants'
-import {  sizes, Style } from '@/@types/style-type'
-
-export type ButtonProps = {
-  /**
-   * ボタンのスタイルの種類
-   */
-  variant?: keyof typeof variants
-
-  /**
-   * ボタンの色
-   */
-  color?: 'primary' | 'secondary' | 'white'
-
-  /**
-   * ボタンの大きさ
-   */
-  size?: sizes
-
-  /**
-   * `true`のとき、ボタンを正方形にする。
-   */
-  square?: boolean
-
-  /**
-   * `true`のとき、ボタンが押下で若干グレーになる
-   */
-  ripple?: boolean
-
-  /**
-   * `true`のとき、ボタンのコンテンツ内容がローディングに変更
-   */
-  loading?: boolean
-
-  /**
-   * `true`のとき、ボタンが100%になる
-   */
-  fullWidth?: boolean
-
-  /**
-   * ボタンの前につくIcon
-   */
-  prefixIcon?: ReactNode
-
-  /**
-   * ボタンの後につくIcon
-   */
-  suffixIcon?: ReactNode
-
-  /**
-   * `true`のとき、ボタンがdisabledになる
-   */
-  disabled?: boolean
-
-  /**
-   * ボタンにクラスを追加
-   */
-  className?: string
-}
+import {  Style } from '@/@types/style-type'
+import { ButtonProps } from '@/components/Elements'
 
 const styles = {
   base: {
@@ -105,8 +48,7 @@ const styles = {
       true: 'shadow-none hover:shadow-none opacity-[0.85] hover:cursor-no-drop'
     }
   }
-}
-
+} as const
 
 export const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'>> , typeof styles>  = {
   defaultProps: {
@@ -121,5 +63,5 @@ export const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon'
     className: '',
   },
   styles: styles
-}
+} as const
 
