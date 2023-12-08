@@ -1,4 +1,3 @@
-// variants style: [contained, text, outlined]
 export const variants = {
   contained: {
     primary: {
@@ -57,4 +56,4 @@ export const variants = {
       active: 'active:opacity-[0.85]',
     }
   }
-}
+} as const
