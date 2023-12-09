@@ -1,12 +1,32 @@
 import { ComponentProps, forwardRef } from 'react'
-import { CardDefaultStyle, CardType } from '@/components/Elements/Card/style/theme'
-import { cardVariants } from '@/components/Elements/Card/style/variants'
+import { Style } from '@/@types/style-type'
+import { styles } from '@/components/Elements/Card/theme'
+import { cardVariants } from '@/components/Elements/Card/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type CardProps = Partial<Omit<CardType, 'base'>> & ComponentProps<'div'>
+type CardProps =  {
+  /**
+   * カードのスタイルの種類
+   */
+  variant?: keyof typeof cardVariants
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(
+  /**
+   * カードにクラスを追加
+   */
+  className?: string
+  
+}
+
+const card: Style<Required<CardProps>, typeof styles['card']> = {
+  defaultProps: {
+    variant: 'contained',
+    className: ''
+  },
+  styles: styles['card']
+} as const
+
+export const Card = forwardRef<HTMLDivElement ,ComponentProps<'div'> & CardProps>(
   (
     { 
       variant, 
@@ -17,14 +37,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     ref
   ) => {
     // 1: set props
-    const cardVariantProps = variant ?? CardDefaultStyle.variant
+    const { defaultProps, styles } = card
+    const cardVariantProp = variant ?? defaultProps.variant
 
     // 2: set styles
-    const cardBase = objectsToString(CardDefaultStyle.base) 
-    const cardVariant = objectsToString(cardVariants[cardVariantProps])
+    const cardBase = objectsToString(styles.base)
+    const cardVariant = objectsToString(styles.variants.variants[cardVariantProp])
     const classNames = tailwindMerge(cardBase, cardVariant, className)
-      
-        
+
     return <div {...rest} ref={ref} className={classNames}>
       { children }
     </div>

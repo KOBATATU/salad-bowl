@@ -1,16 +1,33 @@
 import { ComponentProps, forwardRef } from 'react'
+import { Style } from '@/@types/style-type'
 import {
-  CardBodyDefaultStyle,
-  CardFooterDefaultStyle,
-  CardFooterType,
-  footerDivider
-} from '@/components/Elements/Card/style/theme'
+  styles
+} from '@/components/Elements/Card/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type CardFooterProps = Partial<CardFooterType> & ComponentProps<'div'>
+type CardFooterProps = {
 
-export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
+  /**
+   * カードフッターの境目
+   */
+  divider?: boolean
+  
+  /**
+   * カードボディのクラス名
+   */
+  className?: string
+}
+
+const cardFooter: Style<Required<CardFooterProps>, typeof styles['footer']> = {
+  defaultProps: {
+    divider: false,
+    className: ''
+  },
+  styles: styles['footer']
+}
+
+export const CardFooter = forwardRef<HTMLDivElement, ComponentProps<'div'> & CardFooterProps>(
   (
     {
       divider, 
@@ -21,11 +38,12 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
     ref
   ) => {
     // 1: set props
-    const cardFooterDividerProps = divider ?? CardFooterDefaultStyle.divider
+    const {  defaultProps, styles } = cardFooter
+    const cardFooterDividerProp = divider ?? defaultProps.divider
     
     // 2: set styles
-    const cardFooterBase = objectsToString(CardFooterDefaultStyle.base)
-    const cardFooterDivider = divider ? objectsToString(footerDivider) : ''
+    const cardFooterBase = objectsToString(styles.base)
+    const cardFooterDivider = objectsToString(cardFooterDividerProp ? styles.variants.divider : {})
     const classNames = tailwindMerge(cardFooterBase, cardFooterDivider, className)
 
     return <div {...rest} ref={ref} className={classNames}>

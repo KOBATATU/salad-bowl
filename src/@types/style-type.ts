@@ -24,8 +24,12 @@ export type sizes =
   | 'md'
   | 'lg'
 
+export type BaseStyle = {
+  base: object,
+  variants?: object
+}
 
-export type Style<T extends object, U extends {base: any, variants: any}> = {
+export type Style<T extends object, U extends BaseStyle> = {
   defaultProps: T,
   styles: U
 }
