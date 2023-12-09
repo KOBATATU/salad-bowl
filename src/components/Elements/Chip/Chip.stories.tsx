@@ -11,18 +11,29 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   render: (args) => {
-    return <Chip {...args}>HOGE</Chip>
+    return <Chip {...args}>タグ</Chip>
   }
 }
 
-export const ChipLink: Story = {
+export const Chips: Story = {
   render: (args) => {
     return (
-      <Link href={'/hoge'}>
-        <Chip>HOGE</Chip>
-      </Link>
+      <div>
+        <span>variants colors</span>
+        <div className='flex'>
+          <Chip variant='contained' color='blue' className='mr-2'>チップ</Chip>
+          <Chip variant='outlined' color='blue'>チップ</Chip>
+        </div>
+
+        <span>リンク</span>
+        <div className='flex'>
+          <Link href={'/hoge'}>
+            <Chip>タグ</Chip>
+          </Link>
+        </div>
+      </div>
     )
   }
 }
