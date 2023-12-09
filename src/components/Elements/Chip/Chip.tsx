@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react'
-import { styles} from '@/components/Elements/Chip/theme'
-import { variants} from '@/components/Elements/Chip/variants'
+import { sizes, colors, Style } from '@/@types/style-type'
+import { styles } from '@/components/Elements/Chip/theme'
+import { variants } from '@/components/Elements/Chip/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
-import { sizes, colors, Style } from '@/@types/style-type'
 
 type ChipProps = {
   /**
