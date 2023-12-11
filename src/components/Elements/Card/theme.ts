@@ -35,7 +35,7 @@ export const styles = {
     },
     variants: {
       divider: {
-        true: 'border-t border-blue-gray-50'
+        true: { border: 'border-t border-blue-gray-50' }
       }
     }
   }

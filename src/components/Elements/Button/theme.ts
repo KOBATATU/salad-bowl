@@ -40,10 +40,20 @@ export const styles = {
       true: 'w-full'
     },
     loading: {
-      true: 'shadow-none hover:shadow-none opacity-[0.85] hover:cursor-no-drop flex justify-center'
+      true: {
+        display: 'flex',
+        justify: 'justify-center',
+        shadow: 'shadow-none',
+        opacity: 'opacity-[0.85]',
+        hover: 'hover:shadow-none hover:cursor-no-drop'
+      }
     },
     disable: {
-      true: 'shadow-none hover:shadow-none opacity-[0.85] hover:cursor-no-drop'
+      true: {
+        shadow: 'shadow-none',
+        opacity: 'opacity-[0.85] ',
+        hover: 'hover:shadow-none hover:cursor-no-drop'
+      }
     }
   }
 } as const

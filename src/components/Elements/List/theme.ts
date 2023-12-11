@@ -20,12 +20,17 @@ export const styles = {
       borderRadius: 'rounded-lg',
       textAlign: 'text-start',
       lightHeight: 'leading-tight',
-      bg: 'hover:bg-gray-100 hover:bg-opacity-80 active:bg-gray-200 active:bg-opacity-80 hover:cursor-pointer',
       outline: 'outline-none',
+      hover: 'hover:bg-gray-100 hover:bg-opacity-80 hover:cursor-pointer',
+      active: 'active:bg-gray-200 active:bg-opacity-80'
     },
     variants: {
       disabled: {
-        true: "hover:bg-transparent focus:bg-transparent active:bg-transparent",
+        true: {
+          focus: 'focus:bg-transparent ',
+          hover: 'hover:bg-transparent',
+          active: 'active:bg-transparent'
+        },
       }
     }
   }
