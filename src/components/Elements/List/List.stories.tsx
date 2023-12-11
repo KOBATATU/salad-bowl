@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj ,} from '@storybook/react'
 import { MdWarningAmber } from 'react-icons/md'
-import { Card, List, ListItem, Typography } from '@/components/Elements'
+import { Card, List, ListItem } from '@/components/Elements'
 
 const meta = {
   title: 'Elements/List',
@@ -11,17 +11,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const list: Story = {
   render: (args) => {
     return (
       <Card>
         <List {...args}>
-          <ListItem ripple={false}>HOGE</ListItem>
-          <ListItem>HOGEHUGA</ListItem>
-          <ListItem>HOGEHOGEHOGE</ListItem>
-          <ListItem className={'justify-between'}>
-            HOGE
-            <MdWarningAmber className="inline-block h-6 w-6" />
+          <ListItem>通常のListItem</ListItem>
+          <ListItem ripple={true}>ListItemのRippleがtrue</ListItem>
+          <ListItem disabled={true}>LiteItemのDisabledがtrue</ListItem>
+          <ListItem prefixIcon={<MdWarningAmber className="h-6 w-6" />}>
+            前にicon
+          </ListItem>
+          <ListItem className='justify-between' suffixIcon={<MdWarningAmber className=" h-6 w-6" />}>
+            後ろにicon
           </ListItem>
         </List>
       </Card>

@@ -1,13 +1,26 @@
 import { ComponentProps, forwardRef } from 'react'
-import { listBase, ListStyleType } from '@/components/Elements/List/style/theme'
+import {  styles } from '@/components/Elements/List/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
+import {Style} from "@/@types/style-type";
 
-type ListProps = Partial<ListStyleType> & ComponentProps<'div'>
+type ListProps = {
+  /**
+   * listにクラスを追加
+   */
+  className?: string
+}
 
-export const List = forwardRef<HTMLDivElement, ListProps>(
+const list: Style<ListProps, typeof styles['list']> = {
+  defaultProps: {
+    className: ''
+  },
+  styles: styles['list']
+}
+
+export const List = forwardRef<HTMLDivElement, ComponentProps<'div'> & ListProps>(
   (
-    { 
+    {
       className,
       children,
       ...rest
@@ -16,7 +29,8 @@ export const List = forwardRef<HTMLDivElement, ListProps>(
   ) => {
     
     // 1: set styles
-    const base = objectsToString(listBase)
+    const { styles } = list
+    const base = objectsToString(styles.base)
     const classNames = tailwindMerge(base, className)
     
     return (
