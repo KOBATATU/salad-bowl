@@ -84,6 +84,7 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<Reac
   (
     {
       __scopeCollapsible,
+      children,
       ...triggerProps
     },
     ref
@@ -91,6 +92,26 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<Reac
     const context = useCollapsibleContext(TRIGGER_NAME, __scopeCollapsible);
 
 
-    return <></>
+    return (<button
+      type="button"
+      aria-controls={context.contentId}
+      aria-expanded={context.open || false}
+      data-state={getState(context.open)}
+      data-disabled={context.disabled ? '' : undefined}
+      disabled={context.disabled}
+      {...triggerProps}
+      ref={ref}
+      onClick={triggerProps.onClick ?? context.onOpenToggle}
+    >
+      {children}
+    </button>)
   }
 )
+
+CollapsibleTrigger.displayName = TRIGGER_NAME
+
+/* -------------------------------------------------------------------------------------------------
+ * CollapsibleContent
+ * -----------------------------------------------------------------------------------------------*/
+
+const CONTENT_NAME = 'CollapsibleContent';

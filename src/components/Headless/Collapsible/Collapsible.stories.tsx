@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import {useEffect, useRef, useState} from 'react'
 
-import { Collapsible } from '@/components/Headless/Collapsible/Collapsible'
+import { Collapsible, CollapsibleTrigger } from '@/components/Headless/Collapsible/Collapsible'
 
 const meta = {
   title: 'Headless/Collapsible',
@@ -20,9 +20,14 @@ export const _Collapsible: Story = {
   },
   render: function Default(args){
     const [open, setOpen] = useState<boolean>(args.open)
+    const ref = useRef<HTMLButtonElement>(null)
+
+    useEffect(()=> { console.log(ref.current?.disabled)}, [ref])
+
     return (
-      <Collapsible open={open} onOpenChange={setOpen} >
-        <div>hoge</div>
+      <Collapsible  {...args} open={open} onOpenChange={setOpen}  >
+        {/*<CollapsibleTrigger ref={ref}>ボタン</CollapsibleTrigger>*/}
+        <button ref={ref}>ボタン</button>
       </Collapsible>
     )
   }

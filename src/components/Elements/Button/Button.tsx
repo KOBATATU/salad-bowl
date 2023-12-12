@@ -1,4 +1,3 @@
-'use client'
 import Ripple from 'material-ripple-effects'
 import React, { forwardRef, ReactNode } from 'react'
 import { sizes } from '@/@types/style-type'
