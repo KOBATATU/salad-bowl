@@ -1,13 +1,43 @@
-import { createElement, forwardRef } from 'react'
-import typographyColors from '@/components/Elements/Typography/style/colors'
-import { TypographyDefaultProps, TypographyType } from '@/components/Elements/Typography/style/theme'
-import { variants } from '@/components/Elements/Typography/style/variants'
+import { createElement, forwardRef, ReactNode } from 'react'
+import { Style } from '@/@types/style-type'
+import typographyColors from '@/components/Elements/Typography/colors'
+import { styles } from '@/components/Elements/Typography/theme'
+import { variants } from '@/components/Elements/Typography/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type TypographyProps = Partial<TypographyType>
+type TypographyProps = {
+  /**
+   * テキストのdomデザインの種類
+   */
+  variant: keyof typeof variants
 
-export const Typography = forwardRef<Omit<HTMLButtonElement, 'color'>, TypographyProps>(
+  /**
+   * テキストの色
+   */
+  color?: keyof typeof typographyColors
+
+  /**
+   * テキストのdom要素
+   */
+  as?:  keyof typeof variants
+  
+  /**
+   * テキストにクラスを追加
+   */
+  className?: string
+}
+
+const typography: Style<Required<Omit<TypographyProps, 'as'>>, typeof styles> = {
+  defaultProps: {
+    variant: 'paragraph',
+    color: 'black',
+    className: ''
+  },
+  styles: styles
+}
+
+export const Typography = forwardRef<HTMLElement , TypographyProps & {children?: ReactNode}>(
   ({ 
     variant, 
     color,
@@ -17,13 +47,14 @@ export const Typography = forwardRef<Omit<HTMLButtonElement, 'color'>, Typograph
     ...rest }, 
   ref) => {
     // 1: set props
-    const typographyVariantProps = variant ?? TypographyDefaultProps.variant
-    const typographyColorProps = color ?? TypographyDefaultProps.color
-    const typographyAsProps = as
+    const { defaultProps, styles } = typography
+    const typographyVariantProp = variant ?? defaultProps.variant
+    const typographyColorProp = color ?? defaultProps.color
+    const typographyAsProp = as
 
     // 2: set styles
-    const typographyVariant = objectsToString(variants[typographyVariantProps])
-    const typographyColor = objectsToString(typographyColors[typographyColorProps])
+    const typographyVariant = objectsToString(styles.variants.variants[typographyVariantProp])
+    const typographyColor = objectsToString(styles.variants.colors[typographyColorProp])
     const classNames = tailwindMerge(typographyVariant, typographyColor, className)
 
     // 3: create element by as
@@ -36,25 +67,25 @@ export const Typography = forwardRef<Omit<HTMLButtonElement, 'color'>, Typograph
 
       switch (variant) {
       case 'h1':
-        return createElement(typographyAsProps || 'h1', commonProps, children)
+        return createElement(typographyAsProp || 'h1', commonProps, children)
       case 'h2':
-        return createElement(typographyAsProps || 'h2', commonProps, children)
+        return createElement(typographyAsProp || 'h2', commonProps, children)
       case 'h3':
-        return createElement(typographyAsProps || 'h3', commonProps, children)
+        return createElement(typographyAsProp || 'h3', commonProps, children)
       case 'h4':
-        return createElement(typographyAsProps || 'h4', commonProps, children)
+        return createElement(typographyAsProp || 'h4', commonProps, children)
       case 'h5':
-        return createElement(typographyAsProps || 'h5', commonProps, children)
+        return createElement(typographyAsProp || 'h5', commonProps, children)
       case 'h6':
-        return createElement(typographyAsProps || 'h6', commonProps, children)
+        return createElement(typographyAsProp || 'h6', commonProps, children)
       case 'paragraph':
-        return createElement(typographyAsProps || 'p', commonProps, children)
+        return createElement(typographyAsProp || 'p', commonProps, children)
       case 'span':
-        return createElement(typographyAsProps || 'span', commonProps, children)
+        return createElement(typographyAsProp || 'span', commonProps, children)
       }
     }
 
-    return element(typographyVariantProps)
+    return element(typographyVariantProp)
   }
 )
 
