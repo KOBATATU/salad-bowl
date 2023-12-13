@@ -14,8 +14,8 @@ export const Default: Story = {
   render: (args)=> {
     return (
       <div className={'mx-auto flex h-1/2 w-1/2 items-center justify-center'}>
-        <Spinner />
-        <Spinner className={'h-12 w-12'} />
+        <Spinner {...args} />
+        <Spinner {...args} className={'h-12 w-12'} />
         <Spinner {...args} className={'h-24 w-24'} />
       </div>
     )

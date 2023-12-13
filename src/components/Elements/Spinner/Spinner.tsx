@@ -1,27 +1,47 @@
 import { ComponentProps, forwardRef } from 'react'
-import { spinnerColors } from '@/components/Elements/Spinner/style/colors'
-import { spinnerBase, SpinnerType } from '@/components/Elements/Spinner/style/theme'
+import { Style } from '@/@types/style-type'
+import { spinnerColors } from '@/components/Elements/Spinner/colors'
+import { styles } from '@/components/Elements/Spinner/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type SpinnerProps = SpinnerType & ComponentProps<'svg'>
+type SpinnerProps = {
+  /**
+   * スピナーの色
+   */
+  color?: keyof typeof spinnerColors
 
-export const Spinner = forwardRef<SVGSVGElement, SpinnerProps>(
+  /**
+   * スピナーのクラスを追加
+   */
+  className?: string
+}
+
+const spinner: Style<Required<SpinnerProps>, typeof styles> = {
+  defaultProps: {
+    color: 'gray',
+    className: ''
+  },
+  styles: styles
+}
+
+export const Spinner = forwardRef<ComponentProps<'svg'> & SVGSVGElement, SpinnerProps>(
   (
     {
       className,
-      spinnerColor,
+      color,
       ...rest
     },
     ref
   ) => {
 
     // 1: set props
-    const spinnerColorProps = spinnerColor ?? spinnerBase.spinnerColor.color
+    const { defaultProps, styles } = spinner
+    const spinnerColorProps = color ?? defaultProps.color
 
     // 2: set style
-    const spinnerBaseStyle = objectsToString(spinnerBase.base)
-    const spinnerColorStyle = objectsToString(spinnerColors[spinnerColorProps])
+    const spinnerBaseStyle = objectsToString(styles.base)
+    const spinnerColorStyle = objectsToString(styles.variants.colors[spinnerColorProps])
     const classNames = tailwindMerge(spinnerBaseStyle, className)
 
     return (
