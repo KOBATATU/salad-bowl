@@ -1,6 +1,6 @@
 'use client'
 import { Pokemon } from '@/features/pokemon/[pokemon]/components/Presentational/Pokemon'
-import { pokemonService } from '@/hooks/pokemon/pokemonService'
+import { pokemonService } from '@/domain/pokemon/pokemonService'
 
 type PokemonContainerProps = { params: { pokemonName: string } }
 

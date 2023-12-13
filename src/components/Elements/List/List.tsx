@@ -1,8 +1,8 @@
 import { ComponentProps, forwardRef } from 'react'
+import { Style } from '@/@types/style-type'
 import {  styles } from '@/components/Elements/List/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
-import {Style} from "@/@types/style-type";
 
 type ListProps = {
   /**

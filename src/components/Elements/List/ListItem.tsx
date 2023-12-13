@@ -1,11 +1,11 @@
 import Ripple from 'material-ripple-effects'
-import React, {ComponentProps, forwardRef, Fragment, ReactNode} from 'react'
+import React, { ComponentProps, forwardRef, Fragment, ReactNode } from 'react'
+import { Style } from '@/@types/style-type'
 import {
   styles
 } from '@/components/Elements/List/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
-import {Style} from "@/@types/style-type";
 
 type ListItemProps =  {
   /**
