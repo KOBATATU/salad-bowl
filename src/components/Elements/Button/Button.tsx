@@ -121,31 +121,22 @@ export const Button = forwardRef<HTMLButtonElement, Omit<React.ComponentProps<'b
     const rippleEffect = new Ripple()
     
     const _children = () => {
-      if (prefixIcon) {
-        return (
-          <span className='flex items-center'>
-            <span className='mr-1 text-md '> {prefixIcon} </span>
-            {children}
-          </span>
-        )
-      }
-
-      if (suffixIcon) {
-        return (
-          <span className='flex items-center'>
-            {children}
-            <span className='ml-1 text-md'> {suffixIcon} </span>
-          </span>
-        )
-      }
-      return children
+      return (
+        <span className='flex items-center'>
+          {prefixIcon ? <span className='mr-1 text-md'>{prefixIcon}</span> : undefined}
+          {children}
+          {suffixIcon ? <span className='mr-1 text-md'>{suffixIcon}</span> : undefined}
+        </span>
+      )
     }
+    const _disabled = buttonLoadingProp || disabled
 
     return (
       <button
         {...rest}
         ref={ref}
-        disabled={buttonLoadingProp || disabled}
+        aria-disabled={_disabled}
+        disabled={_disabled}
         className={classNames}
         onMouseDown={(e) => {
           const onMouseDown = rest?.onMouseDown
