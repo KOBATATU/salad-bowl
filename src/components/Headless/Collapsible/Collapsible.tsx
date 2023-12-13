@@ -1,5 +1,6 @@
 'use client'
-import React, { ComponentProps, forwardRef } from 'react'
+import { useLayoutEffect } from '@radix-ui/react-use-layout-effect'
+import React, { ComponentProps, forwardRef, useRef } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
 import { useId } from '@/components/Headless/id/id'
 
@@ -89,7 +90,7 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<Reac
     },
     ref
   ) => {
-    const context = useCollapsibleContext(TRIGGER_NAME, __scopeCollapsible);
+    const context = useCollapsibleContext(TRIGGER_NAME, __scopeCollapsible)
 
 
     return (<button
@@ -114,4 +115,47 @@ CollapsibleTrigger.displayName = TRIGGER_NAME
  * CollapsibleContent
  * -----------------------------------------------------------------------------------------------*/
 
-const CONTENT_NAME = 'CollapsibleContent';
+const CONTENT_NAME = 'CollapsibleContent'
+
+type CollapsibleContentProps = {
+  forceMount?: boolean
+}
+export const CollapsibleContent = forwardRef<HTMLDivElement, ComponentProps<'div'> & ScopedProps<CollapsibleContentProps>>(
+  ({
+    forceMount,
+    children,
+    ...rest
+  }) => {
+    const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
+    const ref = useRef<HTMLDivElement>(null)
+    const heightRef = useRef<number | null>(0)
+    const widthRef = useRef<number | null>(0)
+    const isOpen = context.open
+
+    useLayoutEffect(()=> {
+      const node = ref.current
+      if (node) {
+
+        const rect = node.getBoundingClientRect()
+        heightRef.current = rect.height
+        widthRef.current = rect.width
+      }
+    }, [ context.open ])
+
+    return <div
+      data-state={getState(context.open)}
+      data-disabled={context.disabled ? '' : undefined}
+      id={context.contentId}
+      hidden={!isOpen}
+      {...rest}
+      ref={ref}
+      style={{
+        ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
+        ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
+        ...rest.style
+      }}
+    >
+      {isOpen && children}
+    </div>
+  }
+)
