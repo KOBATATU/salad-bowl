@@ -7,6 +7,7 @@
 }
 .CollapsibleContent[data-state='closed'] {
     animation: slideUp 300ms ease-out;
+    animation-fill-mode: forwards;
 }
 
 @keyframes slideDown {

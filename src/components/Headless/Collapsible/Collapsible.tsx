@@ -1,7 +1,7 @@
 'use client'
 import { Presence } from '@radix-ui/react-presence'
 import { useLayoutEffect } from '@radix-ui/react-use-layout-effect'
-import React, { ComponentProps, forwardRef, useRef, ComponentPropsWithRef } from 'react'
+import React, { ComponentProps, forwardRef, useRef, ComponentPropsWithRef, useEffect } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
 import { composeEventHandlers, Primitive } from '@/components/Headless/Primitive/Primitive'
 import { useComposedRefs } from '@/components/Headless/composeRefs/composeRefs'
@@ -173,13 +173,17 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
     const isOpen = context.open || isPresent
     const originalStylesRef = React.useRef<Record<string, string>>()
 
+    const [initialRender, setInitialRender] = React.useState(true);
+    useEffect(() => {
+      setInitialRender(false)
+    },[])
 
     useLayoutEffect(() => {
       const node = ref.current
       if (node) {
         originalStylesRef.current = originalStylesRef.current || {
           transitionDuration: node.style.transitionDuration,
-          animationName: node.style.animationName,
+          animationName: node.style.animationName
         }
         // block any animations/transitions so the element renders at its full dimensions
         node.style.transitionDuration = '0s'
@@ -193,18 +197,17 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         // kick off any animations/transitions that were originally set up if it isn't the initial mount
         node.style.transitionDuration = originalStylesRef.current.transitionDuration
         node.style.animationName = originalStylesRef.current.animationName
-
-        setIsPresent(present)
+        
+        // setIsPresent(present)
       }
 
-    }, [context.open, present])
+    }, [context.open])
 
     return (
       <Primitive.div
         data-state={getState(context.open)}
         data-disabled={context.disabled ? '' : undefined}
         id={context.contentId}
-        hidden={!isOpen}
         {...rest}
         ref={composedRefs}
         style={{
@@ -213,7 +216,7 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
           ...rest.style,
         }}
       >
-        {isOpen && children}
+        {!initialRender && children}
       </Primitive.div>
     )
   }
