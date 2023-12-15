@@ -1,7 +1,10 @@
 'use client'
+import { Presence } from '@radix-ui/react-presence'
 import { useLayoutEffect } from '@radix-ui/react-use-layout-effect'
-import React, { ComponentProps, forwardRef, useRef } from 'react'
+import React, { ComponentProps, forwardRef, useRef, ComponentPropsWithRef } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
+import { composeEventHandlers, Primitive } from '@/components/Headless/Primitive/Primitive'
+import { useComposedRefs } from '@/components/Headless/composeRefs/composeRefs'
 import { useId } from '@/components/Headless/id/id'
 
 type CollapsibleContextValueType = {
@@ -22,6 +25,7 @@ function getState(open?: boolean) {
   return open ? 'open' : 'closed'
 }
 
+type CollapsibleElement = React.ElementRef<typeof Primitive.div>
 type CollapsibleProps = {
   defaultOpen?: boolean;
   contentId?: string;
@@ -29,8 +33,8 @@ type CollapsibleProps = {
   disabled?: boolean;
   children?: React.ReactNode
   onOpenChange(open: boolean): void;
-}
-export const Collapsible = forwardRef<HTMLDivElement,ScopedProps<CollapsibleProps>>(
+} & React.ComponentPropsWithoutRef<typeof Primitive.div>
+export const Collapsible = forwardRef<CollapsibleElement,ScopedProps<CollapsibleProps>>(
   (
     {
       __scopeCollapsible,
@@ -38,7 +42,7 @@ export const Collapsible = forwardRef<HTMLDivElement,ScopedProps<CollapsibleProp
       open,
       disabled,
       onOpenChange,
-      children,
+
       ...rest
     },
     ref
@@ -68,9 +72,12 @@ export const Collapsible = forwardRef<HTMLDivElement,ScopedProps<CollapsibleProp
         open={open}
         onOpenToggle={openChange}
       >
-        <div {...rest} ref={ref} data-state={getState(open)} data-disabled={disabled ? '' : undefined}>
-          {children}
-        </div>
+        <Primitive.div
+          data-state={getState(open)} 
+          data-disabled={disabled ? '' : undefined}
+          {...rest} 
+          ref={ref}
+        />
       </CollapsibleProvider>
     )
   })
@@ -81,11 +88,14 @@ Collapsible.displayName = COLLAPSIBLE_NAME
  * -----------------------------------------------------------------------------------------------*/
 const TRIGGER_NAME = 'CollapsibleTrigger'
 
-export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<React.ComponentProps<'button'>>>(
+type CollapsibleTriggerElement = React.ElementRef<typeof Primitive.button>
+type PrimitiveButtonProps = React.ComponentPropsWithoutRef<typeof Primitive.button>
+type CollapsibleTriggerProps = PrimitiveButtonProps & {}
+
+export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<CollapsibleTriggerProps>>(
   (
     {
       __scopeCollapsible,
-      children,
       ...triggerProps
     },
     ref
@@ -93,19 +103,19 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, ScopedProps<Reac
     const context = useCollapsibleContext(TRIGGER_NAME, __scopeCollapsible)
 
 
-    return (<button
-      type="button"
-      aria-controls={context.contentId}
-      aria-expanded={context.open || false}
-      data-state={getState(context.open)}
-      data-disabled={context.disabled ? '' : undefined}
-      disabled={context.disabled}
-      {...triggerProps}
-      ref={ref}
-      onClick={triggerProps.onClick ?? context.onOpenToggle}
-    >
-      {children}
-    </button>)
+    return (
+      <Primitive.button
+        type="button"
+        aria-controls={context.contentId}
+        aria-expanded={context.open || false}
+        data-state={getState(context.open)}
+        data-disabled={context.disabled ? '' : undefined}
+        disabled={context.disabled}
+        {...triggerProps}
+        ref={ref}
+        onClick={composeEventHandlers(triggerProps.onClick , context.onOpenToggle)}
+      />
+    )
   }
 )
 
@@ -114,48 +124,99 @@ CollapsibleTrigger.displayName = TRIGGER_NAME
 /* -------------------------------------------------------------------------------------------------
  * CollapsibleContent
  * -----------------------------------------------------------------------------------------------*/
+type PrimitiveDivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>;
+
+type CollapsibleContentImplElement = React.ElementRef<typeof Primitive.div>;
+interface CollapsibleContentImplProps extends PrimitiveDivProps {
+  present: boolean;
+}
+interface CollapsibleContentProps extends Omit<CollapsibleContentImplProps, 'present'> {
+  /**
+   * Used to force mounting when more control is needed. Useful when
+   * controlling animation with React animation libraries.
+   */
+  forceMount?: true;
+}
+
 
 const CONTENT_NAME = 'CollapsibleContent'
 
-type CollapsibleContentProps = {
-  forceMount?: boolean
-}
-export const CollapsibleContent = forwardRef<HTMLDivElement, ComponentProps<'div'> & ScopedProps<CollapsibleContentProps>>(
-  ({
-    forceMount,
-    children,
-    ...rest
-  }) => {
-    const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
-    const ref = useRef<HTMLDivElement>(null)
-    const heightRef = useRef<number | null>(0)
-    const widthRef = useRef<number | null>(0)
-    const isOpen = context.open
+export const CollapsibleContent = forwardRef<CollapsibleContentImplElement, CollapsibleContentProps>(
+  (props: ScopedProps<CollapsibleContentProps>, ref) => {
+    const { forceMount, ...contentProps } = props
 
-    useLayoutEffect(()=> {
+    const context = useCollapsibleContext(CONTENT_NAME, props.__scopeCollapsible)
+    return (
+      <Presence present={forceMount || context.open}>
+        {({ present }) => (
+          <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
+        )}
+      </Presence>
+    )
+  }
+)
+CollapsibleContent.displayName =CONTENT_NAME
+
+
+const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedProps<CollapsibleContentImplProps>>(
+  ({
+    children,
+    present,
+    ...rest
+  }, forwardedRef) => {
+    const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
+    const [isPresent, setIsPresent] = React.useState(present)
+    const ref = useRef<CollapsibleElement>(null)
+    const composedRefs = useComposedRefs(ref, forwardedRef)
+    const heightRef = React.useRef<number | undefined>(0)
+    const widthRef = React.useRef<number | undefined>(0)
+    const isOpen = context.open || isPresent
+    const originalStylesRef = React.useRef<Record<string, string>>()
+
+
+    useLayoutEffect(() => {
       const node = ref.current
       if (node) {
+        originalStylesRef.current = originalStylesRef.current || {
+          transitionDuration: node.style.transitionDuration,
+          animationName: node.style.animationName,
+        }
+        // block any animations/transitions so the element renders at its full dimensions
+        node.style.transitionDuration = '0s'
+        node.style.animationName = 'none'
 
+        // get width and height from full dimensions
         const rect = node.getBoundingClientRect()
         heightRef.current = rect.height
         widthRef.current = rect.width
-      }
-    }, [ context.open ])
 
-    return <div
-      data-state={getState(context.open)}
-      data-disabled={context.disabled ? '' : undefined}
-      id={context.contentId}
-      hidden={!isOpen}
-      {...rest}
-      ref={ref}
-      style={{
-        ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
-        ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
-        ...rest.style
-      }}
-    >
-      {isOpen && children}
-    </div>
+        // kick off any animations/transitions that were originally set up if it isn't the initial mount
+        node.style.transitionDuration = originalStylesRef.current.transitionDuration
+        node.style.animationName = originalStylesRef.current.animationName
+
+        setIsPresent(present)
+      }
+
+    }, [context.open, present])
+
+    return (
+      <Primitive.div
+        data-state={getState(context.open)}
+        data-disabled={context.disabled ? '' : undefined}
+        id={context.contentId}
+        hidden={!isOpen}
+        {...rest}
+        ref={composedRefs}
+        style={{
+          ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
+          ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
+          ...rest.style,
+        }}
+      >
+        {isOpen && children}
+      </Primitive.div>
+    )
   }
 )
+
+CollapsibleContentImpl.displayName = 'CollapsibleContentImpl'

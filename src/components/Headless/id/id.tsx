@@ -13,7 +13,7 @@ function useId(deterministicId?: string): string {
   useLayoutEffect(() => {
     if (!deterministicId) setId((reactId) => reactId ?? String(count++))
   }, [deterministicId])
-  return deterministicId || (id ? `radix-${id}` : '')
+  return deterministicId || (id ? `salad-${id}` : '')
 }
 
 export { useId }
