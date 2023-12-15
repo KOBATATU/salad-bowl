@@ -36,10 +36,6 @@ export const Primitive = NODES.reduce((primitive, node) => {
     const { asChild, ...primitiveProps } = props
     const Comp: any = asChild ?? node
 
-    React.useEffect(()=>{
-
-    }, [])
-
     return <Comp {...primitiveProps} ref={ref}/>
   })
 

@@ -157,26 +157,19 @@ export const CollapsibleContent = forwardRef<CollapsibleContentImplElement, Coll
 )
 CollapsibleContent.displayName =CONTENT_NAME
 
-
 const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedProps<CollapsibleContentImplProps>>(
   ({
     children,
-    present,
     ...rest
   }, forwardedRef) => {
     const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
-    const [isPresent, setIsPresent] = React.useState(present)
+    const [isPresent, setIsPresent] = React.useState(context.open)
     const ref = useRef<CollapsibleElement>(null)
-    const composedRefs = useComposedRefs(ref, forwardedRef)
+    // const composedRefs = useComposedRefs(ref, forwardedRef)
     const heightRef = React.useRef<number | undefined>(0)
     const widthRef = React.useRef<number | undefined>(0)
     const isOpen = context.open || isPresent
     const originalStylesRef = React.useRef<Record<string, string>>()
-
-    const [initialRender, setInitialRender] = React.useState(true);
-    useEffect(() => {
-      setInitialRender(false)
-    },[])
 
     useLayoutEffect(() => {
       const node = ref.current
@@ -189,7 +182,7 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         node.style.transitionDuration = '0s'
         node.style.animationName = 'none'
 
-        // get width and height from full dimensions
+        // アニメーションが始まる直前の値を取得
         const rect = node.getBoundingClientRect()
         heightRef.current = rect.height
         widthRef.current = rect.width
@@ -197,8 +190,11 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         // kick off any animations/transitions that were originally set up if it isn't the initial mount
         node.style.transitionDuration = originalStylesRef.current.transitionDuration
         node.style.animationName = originalStylesRef.current.animationName
-        
-        // setIsPresent(present)
+
+        //閉じる時のanimation終わりにisOpenがfalseになる
+        node.addEventListener('animationend', ()=>{
+          setIsPresent(context.open)
+        })
       }
 
     }, [context.open])
@@ -209,14 +205,15 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         data-disabled={context.disabled ? '' : undefined}
         id={context.contentId}
         {...rest}
-        ref={composedRefs}
+        ref={ref}
+        hidden={!isOpen}
         style={{
           ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
           ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
           ...rest.style,
         }}
       >
-        {!initialRender && children}
+        {isOpen && children}
       </Primitive.div>
     )
   }

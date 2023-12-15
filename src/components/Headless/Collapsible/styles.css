@@ -1,4 +1,8 @@
 /* styles.css */
+/*初期値*/
+:root {
+    --radix-collapsible-content-height: 0px;
+}
 .CollapsibleContent {
     overflow: hidden;
 }
