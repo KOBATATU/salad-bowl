@@ -1,6 +1,6 @@
 import { variants } from './variants'
 import {  Style } from '@/@types/style-type'
-import { ButtonProps } from '@/components/Elements'
+import { ButtonProps } from '@/components/Elements/Button/Button'
 
 const styles = {
   base: {
