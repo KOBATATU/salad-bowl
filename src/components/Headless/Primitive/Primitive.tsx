@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import {Slot} from "@/components/Headless/Slot/Slot";
 
 
 const NODES = [
@@ -29,12 +30,11 @@ type PrimitivePropsWithRef<E extends React.ElementType> = React.ComponentPropsWi
 type PrimitiveForwardRefComponent<E extends React.ElementType> = React.ForwardRefExoticComponent<PrimitivePropsWithRef<E>>
 type Primitives = { [E in typeof NODES[number]]: PrimitiveForwardRefComponent<E> }
 
-
 export const Primitive = NODES.reduce((primitive, node) => {
 
   const Node = React.forwardRef((props: PrimitivePropsWithRef<typeof node>, ref) => {
     const { asChild, ...primitiveProps } = props
-    const Comp: any = asChild ?? node
+    const Comp: any = asChild ? Slot : node
 
     return <Comp {...primitiveProps} ref={ref}/>
   })

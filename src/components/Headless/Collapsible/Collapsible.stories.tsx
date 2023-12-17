@@ -1,7 +1,7 @@
 import * as RadixCollapsible from '@radix-ui/react-collapsible'
 import { Meta, StoryObj } from '@storybook/react'
-import { useEffect, useRef, useState } from 'react'
-
+import { useState } from 'react'
+import { Button } from '@/components/Elements'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/Headless/Collapsible/Collapsible'
 import './styles.css'
 
@@ -21,12 +21,28 @@ export const _Collapsible: Story = {
     onOpenChange: () => {}
   },
   render: function Default(args){
-    const [open, setOpen] = useState<boolean>(args.open)
+    const [open, setOpen] = useState<boolean>(false)
 
     return (
       <>
         <Collapsible  {...args} open={open} onOpenChange={setOpen}  >
-          <CollapsibleTrigger>ボタン</CollapsibleTrigger>
+          <CollapsibleTrigger asChild>
+            <Button>
+              control ボタン
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className='CollapsibleContent'>
+            <div>content1</div>
+            <div>content2</div>
+          </CollapsibleContent>
+        </Collapsible>
+
+        <Collapsible  >
+          <CollapsibleTrigger asChild>
+            <Button>
+              uncontrolled ボタン
+            </Button>
+          </CollapsibleTrigger>
           <CollapsibleContent className='CollapsibleContent'>
             <div>content1</div>
             <div>content2</div>

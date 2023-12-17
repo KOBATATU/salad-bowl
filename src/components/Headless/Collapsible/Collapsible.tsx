@@ -1,11 +1,12 @@
 'use client'
 import { Presence } from '@radix-ui/react-presence'
 import { useLayoutEffect } from '@radix-ui/react-use-layout-effect'
-import React, { ComponentProps, forwardRef, useRef, ComponentPropsWithRef, useEffect } from 'react'
+import React, { forwardRef, useRef } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
 import { composeEventHandlers, Primitive } from '@/components/Headless/Primitive/Primitive'
 import { useComposedRefs } from '@/components/Headless/composeRefs/composeRefs'
-import { useId } from '@/components/Headless/id/id'
+import { useControllableState } from '@/hooks/useControllableState'
+import { useId } from '@/hooks/useId'
 
 type CollapsibleContextValueType = {
   contentId: string;
@@ -29,39 +30,35 @@ type CollapsibleElement = React.ElementRef<typeof Primitive.div>
 type CollapsibleProps = {
   defaultOpen?: boolean;
   contentId?: string;
-  open: boolean;
+  open?: boolean;
   disabled?: boolean;
   children?: React.ReactNode
-  onOpenChange(open: boolean): void;
+  onOpenChange?(open: boolean): void;
 } & React.ComponentPropsWithoutRef<typeof Primitive.div>
 export const Collapsible = forwardRef<CollapsibleElement,ScopedProps<CollapsibleProps>>(
   (
     {
       __scopeCollapsible,
       defaultOpen,
-      open,
+      open: openProp,
       disabled,
       onOpenChange,
-
       ...rest
     },
     ref
   ) => {
+    
+    const [open = false, setOpen] = 
+      useControllableState({ prop: openProp, onChange: onOpenChange, defaultProp: defaultOpen })
 
-    // useControllableStateの役割をしる
-    // const [open = false, setOpen] = useControllableState({
-    //   prop: openProp,
-    //   defaultProp: defaultOpen,
-    //   onChange: onOpenChange,
-    // });
-
-    // callbackする理由はいか(ライブラリではやっているがそこまでする必要もないとは思う)
+    // callbackする理由は以下
     // buttonにこの関数を渡すだけで済む
     // 不要な関数の再計算が不要
     const openChange = React.useCallback(
       ()=> {
-        onOpenChange(!open)
-      }, [open, onOpenChange]
+        console.log(open)
+        setOpen(!open)
+      }, [setOpen, open]
     )
 
     return (
@@ -165,7 +162,7 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
     const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
     const [isPresent, setIsPresent] = React.useState(context.open)
     const ref = useRef<CollapsibleElement>(null)
-    // const composedRefs = useComposedRefs(ref, forwardedRef)
+    const composedRefs = useComposedRefs(ref, forwardedRef)
     const heightRef = React.useRef<number | undefined>(0)
     const widthRef = React.useRef<number | undefined>(0)
     const isOpen = context.open || isPresent
@@ -205,7 +202,7 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         data-disabled={context.disabled ? '' : undefined}
         id={context.contentId}
         {...rest}
-        ref={ref}
+        ref={composedRefs}
         hidden={!isOpen}
         style={{
           ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
