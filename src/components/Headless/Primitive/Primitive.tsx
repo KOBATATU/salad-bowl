@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {Slot} from "@/components/Headless/Slot/Slot";
+import { Slot } from '@/components/Headless/Slot/Slot'
 
 
 const NODES = [
@@ -52,8 +52,8 @@ export const composeEventHandlers = <E,>(
 )=>{
   return function handlerEvent(event: E) {
     originalEventHandler?.(event)
-    if (!checkForDefaultPrevented || !((event as unknown) as Event).defaultPrevented) {
-      return ourEventHandler?.(event)
+    if (ourEventHandler) {
+      return ourEventHandler(event)
     }
   }
 }
