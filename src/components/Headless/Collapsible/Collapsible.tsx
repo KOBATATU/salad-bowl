@@ -1,5 +1,4 @@
 'use client'
-import { Presence } from '@radix-ui/react-presence'
 import React, { forwardRef, useRef } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
 import { composeEventHandlers, Primitive } from '@/components/Headless/Primitive/Primitive'
@@ -143,13 +142,13 @@ export const CollapsibleContent = forwardRef<CollapsibleContentImplElement, Coll
 
     const context = useCollapsibleContext(CONTENT_NAME, props.__scopeCollapsible)
     return (
-      <Presence present={forceMount || context.open}>
-        {({ present }) => (
-          <>
-            <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
-          </>
-        )}
-      </Presence>
+      // <Presence present={forceMount || context.open}>
+      //   {({ present }) => (
+      //     <>
+      <CollapsibleContentImpl {...contentProps} ref={ref} present={false}/>
+      //     </>
+      //   )}
+      // </Presence>
     )
   }
 )
