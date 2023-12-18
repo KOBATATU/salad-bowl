@@ -145,7 +145,9 @@ export const CollapsibleContent = forwardRef<CollapsibleContentImplElement, Coll
     return (
       <Presence present={forceMount || context.open}>
         {({ present }) => (
-          <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
+          <>
+            <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
+          </>
         )}
       </Presence>
     )
@@ -161,7 +163,7 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
     const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
     const ref = useRef<CollapsibleElement>(null)
     const composedRefs = useComposedRefs(ref)
-    const { isPresent, widthRef, heightRef } = useAnimationWidthHeight({ ref, open: context.open })
+    const { isPresent, width, height } = useAnimationWidthHeight({ ref, open: context.open })
 
     const isOpen = context.open || isPresent
 
@@ -175,8 +177,8 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         ref={composedRefs}
         hidden={!isOpen}
         style={{
-          ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
-          ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
+          ['--radix-collapsible-content-height' as any]: height ? `${height}px` : undefined,
+          ['--radix-collapsible-content-width' as any]: width ? `${width}px` : undefined,
           ...rest.style,
         }}
       >

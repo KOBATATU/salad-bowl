@@ -12,10 +12,11 @@ type AnimationWidthHeightProps = {
  */
 export const useAnimationWidthHeight = <E extends React.ElementType,>(props: AnimationWidthHeightProps)=>{
   const [isPresent, setIsPresent] = React.useState<boolean>(false)
-  const heightRef = React.useRef<number | undefined>(0)
-  const widthRef = React.useRef<number | undefined>(0)
+  const [height, setHeight] = React.useState<number | undefined>(0)
+  const [width, setWidth] = React.useState<number | undefined>(0)
   const originalStylesRef = React.useRef<Record<string, string>>()
-
+  
+  
   React.useLayoutEffect(() => {
     const node = props.ref.current
     
@@ -24,27 +25,34 @@ export const useAnimationWidthHeight = <E extends React.ElementType,>(props: Ani
         transitionDuration: node.style.transitionDuration,
         animationName: node.style.animationName
       }
-      // block any animations/transitions so the element renders at its full dimensions
+      // アニメーションに寄らない状態でサイズを取得
       node.style.transitionDuration = '0s'
       node.style.animationName = 'none'
 
       // アニメーションが始まる直前の値を取得
       const rect = node.getBoundingClientRect()
-      heightRef.current = rect.height
-      widthRef.current = rect.width
+      setHeight(rect.height)
+      setWidth(rect.width)
 
-      // kick off any animations/transitions that were originally set up if it isn't the initial mount
+      // アニメーションの状態を元に戻す
       node.style.transitionDuration = originalStylesRef.current.transitionDuration
       node.style.animationName = originalStylesRef.current.animationName
-
+      
+      
       //閉じる時のanimation終わりにisOpenがfalseになる
-      node.addEventListener('animationend', ()=>{
+      const handleAnimationEnd = ()=> {
         setIsPresent(props.open)
-      })
+      }
+      node.addEventListener('animationend', handleAnimationEnd)
+
+      return ()=>{
+        node.removeEventListener('animationend', handleAnimationEnd)
+      }
     }
 
-  }, [props.open, props.ref])
+
+  }, [ props.open, props.ref])
   
-  return { isPresent, widthRef, heightRef }
+  return { isPresent, width, height }
 
 }

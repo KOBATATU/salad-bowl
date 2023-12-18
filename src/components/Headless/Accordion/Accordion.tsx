@@ -159,11 +159,11 @@ export const AccordionContent = React.forwardRef<AccordionElement, AccordionCont
     const accordionItemContext = useAccordionItemContext(ACCORDION_TRIGGER)
 
     return (
-      <Presence present={accordionItemContext.isOpen}>
-        {({ present }) => (
-          <AccordionContentImpl  {...rest} ref={ref} />
-        )}
-      </Presence>
+      // <Presence present={accordionItemContext.isOpen}>
+      //   {({ present }) => (
+      <AccordionContentImpl  {...rest} ref={ref} />
+      //   )}
+      // </Presence>
     )
   }
 )
@@ -178,8 +178,8 @@ export const AccordionContentImpl = React.forwardRef<AccordionElement, Accordion
     const accordionItemContext = useAccordionItemContext(ACCORDION_TRIGGER)
     
     const ref = useRef<AccordionElement>(null)
-    const { isPresent, widthRef, heightRef } = useAnimationWidthHeight({ ref, open: accordionItemContext.isOpen })
-    const composedRefs = useComposedRefs(ref, forwardedRef)
+    const { isPresent, width, height } = useAnimationWidthHeight({ ref, open: accordionItemContext.isOpen })
+    const composedRefs = useComposedRefs(ref)
     const isOpen = React.useMemo(()=>accordionItemContext.isOpen || isPresent, [accordionItemContext.isOpen, isPresent])
 
 
@@ -191,8 +191,8 @@ export const AccordionContentImpl = React.forwardRef<AccordionElement, Accordion
         ref={composedRefs}
         hidden={!isOpen}
         style={{
-          ['--salad-accordion-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
-          ['--salad-accordion-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
+          ['--salad-accordion-content-height' as any]: height ? `${height}px` : undefined,
+          ['--salad-accordion-content-width' as any]: width ? `${width}px` : undefined,
           ...rest.style,
         }}
       >

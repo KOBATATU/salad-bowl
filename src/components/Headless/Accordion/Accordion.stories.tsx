@@ -24,8 +24,11 @@ export const _Accordion: Story = {
                   <AccordionTrigger className='w-full border-b py-4 text-left font-semibold hover:bg-gray-100 hover:opacity-75' onClick={()=>console.log('hoge')}>
                     Q1: これはAccordionですか？
                   </AccordionTrigger>
-                  <AccordionContent className='AccordionContent w-full' asChild >
+                  <AccordionContent className='AccordionContent w-full'  >
                     <div>
+                      ヘッダーのコンテキストをクリックすることで質問を回答を見ることができるので、Accordionです。
+                      ヘッダーのコンテキストをクリックすることで質問を回答を見ることができるので、Accordionです。
+                      ヘッダーのコンテキストをクリックすることで質問を回答を見ることができるので、Accordionです。
                       ヘッダーのコンテキストをクリックすることで質問を回答を見ることができるので、Accordionです。
                     </div>
                   </AccordionContent>
