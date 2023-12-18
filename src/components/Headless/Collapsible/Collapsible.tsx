@@ -1,10 +1,10 @@
 'use client'
 import { Presence } from '@radix-ui/react-presence'
-import { useLayoutEffect } from '@radix-ui/react-use-layout-effect'
 import React, { forwardRef, useRef } from 'react'
 import { createContextScope, Scope } from '@/components/Headless/Context/createContext'
 import { composeEventHandlers, Primitive } from '@/components/Headless/Primitive/Primitive'
 import { useComposedRefs } from '@/components/Headless/composeRefs/composeRefs'
+import { useAnimationWidthHeight } from '@/hooks/useAnimation'
 import { useControllableState } from '@/hooks/useControllableState'
 import { useId } from '@/hooks/useId'
 
@@ -56,7 +56,6 @@ export const Collapsible = forwardRef<CollapsibleElement,ScopedProps<Collapsible
     // 不要な関数の再計算が不要
     const openChange = React.useCallback(
       ()=> {
-        console.log(open)
         setOpen(!open)
       }, [setOpen, open]
     )
@@ -146,7 +145,9 @@ export const CollapsibleContent = forwardRef<CollapsibleContentImplElement, Coll
     return (
       <Presence present={forceMount || context.open}>
         {({ present }) => (
-          <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
+          <>
+            <CollapsibleContentImpl {...contentProps} ref={ref} present={present}/>
+          </>
         )}
       </Presence>
     )
@@ -160,41 +161,12 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
     ...rest
   }, forwardedRef) => {
     const context = useCollapsibleContext(CONTENT_NAME, rest.__scopeCollapsible)
-    const [isPresent, setIsPresent] = React.useState(context.open)
     const ref = useRef<CollapsibleElement>(null)
-    const composedRefs = useComposedRefs(ref, forwardedRef)
-    const heightRef = React.useRef<number | undefined>(0)
-    const widthRef = React.useRef<number | undefined>(0)
+    const composedRefs = useComposedRefs(ref)
+    const { isPresent, width, height } = useAnimationWidthHeight({ ref, open: context.open })
+
     const isOpen = context.open || isPresent
-    const originalStylesRef = React.useRef<Record<string, string>>()
 
-    useLayoutEffect(() => {
-      const node = ref.current
-      if (node) {
-        originalStylesRef.current = originalStylesRef.current || {
-          transitionDuration: node.style.transitionDuration,
-          animationName: node.style.animationName
-        }
-        // block any animations/transitions so the element renders at its full dimensions
-        node.style.transitionDuration = '0s'
-        node.style.animationName = 'none'
-
-        // アニメーションが始まる直前の値を取得
-        const rect = node.getBoundingClientRect()
-        heightRef.current = rect.height
-        widthRef.current = rect.width
-
-        // kick off any animations/transitions that were originally set up if it isn't the initial mount
-        node.style.transitionDuration = originalStylesRef.current.transitionDuration
-        node.style.animationName = originalStylesRef.current.animationName
-
-        //閉じる時のanimation終わりにisOpenがfalseになる
-        node.addEventListener('animationend', ()=>{
-          setIsPresent(context.open)
-        })
-      }
-
-    }, [context.open])
 
     return (
       <Primitive.div
@@ -205,8 +177,8 @@ const CollapsibleContentImpl = forwardRef<CollapsibleContentImplElement, ScopedP
         ref={composedRefs}
         hidden={!isOpen}
         style={{
-          ['--radix-collapsible-content-height' as any]: heightRef.current ? `${heightRef.current}px` : undefined,
-          ['--radix-collapsible-content-width' as any]: widthRef.current ? `${widthRef.current}px` : undefined,
+          ['--radix-collapsible-content-height' as any]: height ? `${height}px` : undefined,
+          ['--radix-collapsible-content-width' as any]: width ? `${width}px` : undefined,
           ...rest.style,
         }}
       >
