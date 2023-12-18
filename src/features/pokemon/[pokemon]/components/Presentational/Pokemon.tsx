@@ -5,8 +5,6 @@ type PokemonProps = { data: any }
 export const Pokemon = ({ data }: PokemonProps) => {
   const ref = useRef<HTMLButtonElement>(null)
 
-  useEffect(()=> { console.log(ref)}, [ref])
-
   
   return (
     <div>
