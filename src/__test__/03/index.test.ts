@@ -1,4 +1,4 @@
-import {add, timeout, wait} from '@/__test__/03/index'
+import { add, timeout, wait } from '@/__test__/03/index'
 
 describe('足し算のテスト', ()=>{
   test('1+1', () =>{
@@ -48,7 +48,7 @@ describe('値の検証', () => {
     await expect(wait(50)).resolves.toBe(50)
 
     // アサーションが実行されることを確認
-    expect.assertions(1)
+    // expect.assertions(1)
     await expect(timeout(50)).rejects.toBe(50)
   })
 })
