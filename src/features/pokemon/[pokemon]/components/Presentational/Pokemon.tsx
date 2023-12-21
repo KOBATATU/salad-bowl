@@ -34,8 +34,8 @@ const PopoverExample: React.FC = () => {
   const [popoverPosition, setPopoverPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 })
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { top, left, height } = event.currentTarget.getBoundingClientRect()
-    setPopoverPosition({ top: top + height, left })
+    const { top, left, height, width } = event.currentTarget.getBoundingClientRect()
+    setPopoverPosition({ top: top + height, left: left })
     setPopoverVisible(true)
   }
 
@@ -53,7 +53,7 @@ const PopoverExample: React.FC = () => {
   }
 
   return (
-    <div>
+    <div >
       <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         Open Popover
       </button>
