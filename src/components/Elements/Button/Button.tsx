@@ -1,13 +1,13 @@
 import Ripple from 'material-ripple-effects'
 import React, { forwardRef, ReactNode } from 'react'
-import { sizes } from '@/@types/style-type'
+import { sizes, Style } from '@/@types/style-type'
 import { Spinner } from '@/components/Elements'
-import { button  } from '@/components/Elements/Button/theme'
+import { styles } from '@/components/Elements/Button/theme'
 import { variants } from '@/components/Elements/Button/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-export type ButtonProps = {
+type ButtonProps = {
   /**
    * ボタンのスタイルの種類
    */
@@ -63,6 +63,21 @@ export type ButtonProps = {
    */
   className?: string
 }
+
+const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'>> , typeof styles>  = {
+  defaultProps: {
+    variant: 'contained',
+    color: 'primary',
+    size: 'md',
+    square: false,
+    ripple: false,
+    loading: false,
+    fullWidth: false,
+    disabled:false,
+    className: '',
+  },
+  styles: styles
+} as const
 
 export const Button = forwardRef<HTMLButtonElement, Omit<React.ComponentProps<'button'>,'className' | 'disabled'> & ButtonProps>(
   ({

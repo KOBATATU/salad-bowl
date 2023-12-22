@@ -1,8 +1,6 @@
 import { variants } from './variants'
-import {  Style } from '@/@types/style-type'
-import { ButtonProps } from '@/components/Elements/Button/Button'
 
-const styles = {
+export const styles = {
   base: {
     verticalAlign: 'align-middle',
     userSelect: 'select-none',
@@ -49,19 +47,3 @@ const styles = {
     }
   }
 } as const
-
-export const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'>> , typeof styles>  = {
-  defaultProps: {
-    variant: 'contained',
-    color: 'primary',
-    size: 'md',
-    square: false,
-    ripple: false,
-    loading: false,
-    fullWidth: false,
-    disabled:false,
-    className: '',
-  },
-  styles: styles
-} as const
-
