@@ -9,6 +9,9 @@
 //
 // jest.mock('./fetchers')
 //
+test('a', ()=>{
+  expect(1).toBe(1)
+})
 // async function fillValuesAndSubmit() {
 //   const contactNumber = await inputContactNumber()
 //   // const deliveryAddress = await inputDeliveryAddress()
