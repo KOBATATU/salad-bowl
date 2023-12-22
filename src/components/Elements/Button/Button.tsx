@@ -1,13 +1,13 @@
 import Ripple from 'material-ripple-effects'
 import React, { forwardRef, ReactNode } from 'react'
-import { sizes } from '@/@types/style-type'
+import { sizes, Style } from '@/@types/style-type'
 import { Spinner } from '@/components/Elements'
-import { button  } from '@/components/Elements/Button/theme'
+import { styles } from '@/components/Elements/Button/theme'
 import { variants } from '@/components/Elements/Button/variants'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-export type ButtonProps = {
+type ButtonProps = {
   /**
    * ボタンのスタイルの種類
    */
@@ -64,6 +64,21 @@ export type ButtonProps = {
   className?: string
 }
 
+const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'>> , typeof styles>  = {
+  defaultProps: {
+    variant: 'contained',
+    color: 'primary',
+    size: 'md',
+    square: false,
+    ripple: false,
+    loading: false,
+    fullWidth: false,
+    disabled:false,
+    className: '',
+  },
+  styles: styles
+} as const
+
 export const Button = forwardRef<HTMLButtonElement, Omit<React.ComponentProps<'button'>,'className' | 'disabled'> & ButtonProps>(
   ({
     variant, 
@@ -106,31 +121,22 @@ export const Button = forwardRef<HTMLButtonElement, Omit<React.ComponentProps<'b
     const rippleEffect = new Ripple()
     
     const _children = () => {
-      if (prefixIcon) {
-        return (
-          <span className='flex items-center'>
-            <span className='mr-1 text-md '> {prefixIcon} </span>
-            {children}
-          </span>
-        )
-      }
-
-      if (suffixIcon) {
-        return (
-          <span className='flex items-center'>
-            {children}
-            <span className='ml-1 text-md'> {suffixIcon} </span>
-          </span>
-        )
-      }
-      return children
+      return (
+        <span className='flex items-center'>
+          {prefixIcon ? <span className='mr-1 text-md'>{prefixIcon}</span> : undefined}
+          {children}
+          {suffixIcon ? <span className='mr-1 text-md'>{suffixIcon}</span> : undefined}
+        </span>
+      )
     }
+    const _disabled = buttonLoadingProp || disabled
 
     return (
       <button
         {...rest}
         ref={ref}
-        disabled={buttonLoadingProp || disabled}
+        aria-disabled={_disabled}
+        disabled={_disabled}
         className={classNames}
         onMouseDown={(e) => {
           const onMouseDown = rest?.onMouseDown

@@ -1,11 +1,24 @@
 import { ComponentProps, forwardRef } from 'react'
-import { CardBodyDefaultStyle, CardBodyType } from '@/components/Elements/Card/style/theme'
+import { Style } from '@/@types/style-type'
+import { styles } from '@/components/Elements/Card/theme'
 import { objectsToString } from '@/utils/objectsToString'
 import { tailwindMerge } from '@/utils/tailwindMerge'
 
-type CardBodyProps = Partial<CardBodyType> & ComponentProps<'div'>
+type CardBodyProps = {
+  /**
+   * カードボディのクラス名
+   */
+  className?: string
+}
 
-export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
+const cardBody: Style<Required<CardBodyProps>, typeof styles['body']> = {
+  defaultProps: {
+    className: ''
+  },
+  styles: styles['body']
+}
+
+export const CardBody = forwardRef<HTMLDivElement, ComponentProps<'div'> & CardBodyProps>(
   (
     {
       className,
@@ -16,7 +29,8 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
   ) => {
 
     // 1: set styles
-    const cardBodyBase = objectsToString(CardBodyDefaultStyle.base)
+    const { styles } = cardBody
+    const cardBodyBase = objectsToString(styles.base)
     const classNames = tailwindMerge(cardBodyBase, className)
 
     return <div {...rest} ref={ref} className={classNames}>

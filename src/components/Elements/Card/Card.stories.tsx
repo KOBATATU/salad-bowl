@@ -16,8 +16,8 @@ export const SimpleCard: Story = {
     return (
       <div className={'bg-slate-200 p-5'}>
         <Card {...args} className={'max-w-md'}>
-          <CardHeader>
-            <img alt={'サラダ'} src={'https://3.bp.blogspot.com/-8lpZHuv2KT8/V5NEcbV6EFI/AAAAAAAA8jE/AP6PjY_yGNQojTftM10ieg2zW6vv2Pp4wCLcB/s800/salad_reisyabu.png'} />
+          <CardHeader className='flex justify-center'>
+            <img alt='サラダ' src='https://3.bp.blogspot.com/-8lpZHuv2KT8/V5NEcbV6EFI/AAAAAAAA8jE/AP6PjY_yGNQojTftM10ieg2zW6vv2Pp4wCLcB/s800/salad_reisyabu.png' className='h-48 w-48' />
           </CardHeader>
           <CardBody>
             <Typography variant={'h4'} className={'my-2 text-center'}>This is Sarad</Typography>

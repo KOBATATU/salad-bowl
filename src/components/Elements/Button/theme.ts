@@ -1,8 +1,6 @@
 import { variants } from './variants'
-import {  Style } from '@/@types/style-type'
-import { ButtonProps } from '@/components/Elements/Button/Button'
 
-const styles = {
+export const styles = {
   base: {
     verticalAlign: 'align-middle',
     userSelect: 'select-none',
@@ -42,26 +40,20 @@ const styles = {
       true: 'w-full'
     },
     loading: {
-      true: 'shadow-none hover:shadow-none opacity-[0.85] hover:cursor-no-drop flex justify-center'
+      true: {
+        display: 'flex',
+        justify: 'justify-center',
+        shadow: 'shadow-none',
+        opacity: 'opacity-[0.85]',
+        hover: 'hover:shadow-none hover:cursor-no-drop'
+      }
     },
     disable: {
-      true: 'shadow-none hover:shadow-none opacity-[0.85] hover:cursor-no-drop'
+      true: {
+        shadow: 'shadow-none',
+        opacity: 'opacity-[0.85] ',
+        hover: 'hover:shadow-none hover:cursor-no-drop'
+      }
     }
   }
 } as const
-
-export const button: Style<ButtonProps & Required<Omit<ButtonProps, 'prefixIcon' | 'suffixIcon'>> , typeof styles>  = {
-  defaultProps: {
-    variant: 'contained',
-    color: 'primary',
-    size: 'md',
-    square: false,
-    ripple: false,
-    loading: false,
-    fullWidth: false,
-    disabled:false,
-    className: '',
-  },
-  styles: styles
-} as const
-

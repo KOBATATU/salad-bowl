@@ -10,16 +10,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     variant: 'paragraph'
   },
   render: (args) => {
-    return <Typography {...args}>HOGE</Typography>
+    return <Typography {...args} >HOGE</Typography>
   }
 }
 
 export const TypographyFontSize: Story = {
+  args: {
+    variant: 'paragraph'
+  },
   render: () => {
     return (
       <div>
