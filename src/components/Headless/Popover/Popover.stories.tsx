@@ -25,7 +25,7 @@ export const _Popover: Story = {
               <div className=" flex items-center lg:order-2">
                 <Popover>
                   <PopoverTrigger asChild><Button variant='text' color='white'>Login</Button></PopoverTrigger>
-                  <PopoverContent className='border rounded-lg bg-white ' asChild >
+                  <PopoverContent className='rounded-lg border bg-white ' asChild >
                     <List>
                       <ListItem>通常のListItem</ListItem>
                       <ListItem>通常のListItem</ListItem>
@@ -34,7 +34,7 @@ export const _Popover: Story = {
                 </Popover>
                 <Popover>
                   <PopoverTrigger asChild><Button variant='text' color='white'>HOME</Button></PopoverTrigger>
-                  <PopoverContent className='border rounded-lg bg-white ' asChild >
+                  <PopoverContent className='rounded-lg border bg-white ' asChild >
                     <List>
                       <ListItem>通常のListItem</ListItem>
                       <ListItem>通常のListItem</ListItem>

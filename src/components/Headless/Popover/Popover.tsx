@@ -17,7 +17,7 @@ type PopoverContextValueType = {
   contentId: string
   open: boolean
   type: keyof position
-  onOpenToggle(): void
+  onOpenToggle(event: React.MouseEvent): void
   position: position,
   setPosition: (nextValue: position) => void
 }
@@ -38,6 +38,7 @@ function getState(open?: boolean) {
 export const Popover = React.forwardRef<PopoverElement, PopoverProps>(
   (props, ref) => {
     const { defaultOpen, onOpen, open:openProp, type='bottom', ...rest } = props
+    const _ref = useRef<PopoverElement>(null)
 
     //開閉フラグ
     const [ open=false, setOpen ] = useControllableState({
@@ -49,9 +50,30 @@ export const Popover = React.forwardRef<PopoverElement, PopoverProps>(
     const [popoverPosition, setPopoverPosition] =
       React.useState<position>({  left: 0, right: 0, top: 0, bottom:0 })
 
-    const openChange = React.useCallback(()=>{
+    //開閉
+    const openChange = React.useCallback((event:React.MouseEvent)=>{
       setOpen(!open)
     }, [open, setOpen])
+
+    const composedRefs = useComposedRefs(ref,_ref)
+
+    //外側のボタンを押下したときに閉じるようにする
+    React.useEffect(()=>{
+      const handleOff = (event: MouseEvent | TouchEvent)=>{
+        const node = _ref.current
+        if(node && !node.contains(event.target as Node)) {
+          setOpen(false)
+        }
+      }
+
+      document.addEventListener('click', handleOff, false)
+      document.addEventListener('touchend', handleOff, false)
+      return () => {
+        document.removeEventListener('click', handleOff, false)
+        document.removeEventListener('touchend', handleOff, false)
+      }
+    }, [setOpen])
+
 
     return (
       <PopoverProvider 
@@ -64,7 +86,7 @@ export const Popover = React.forwardRef<PopoverElement, PopoverProps>(
       >
         <Primitive.div
           {...rest}
-          ref={ref}
+          ref={composedRefs}
         />
       </PopoverProvider>
     )
@@ -85,7 +107,8 @@ export const PopoverTrigger = React.forwardRef<PopoverTriggerElement, PopoverTri
     const _ref = useRef<PopoverTriggerElement>(null)
     const composedRefs = useComposedRefs(ref,_ref)
     //位置の決定
-    const onClick = React.useCallback(()=>{
+    const onClick = React.useCallback((event: React.MouseEvent)=>{
+
       const node = _ref.current
       if (node) {
         if(context.type === 'bottom') {
@@ -93,7 +116,7 @@ export const PopoverTrigger = React.forwardRef<PopoverTriggerElement, PopoverTri
           context.setPosition({ ...context.position, top: top + height, left: left + width })
         }
       }
-      context.onOpenToggle()
+      context.onOpenToggle(event)
 
     },[context])
 
