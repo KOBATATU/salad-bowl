@@ -1,12 +1,7 @@
+import { getPokemon } from '@/domain/pokemon/fetcher'
 import { useFetch } from '@/hooks/tanstack/useFetch'
 import { prefetch } from '@/hooks/tanstack/usePrefetch'
-import { pokemonGetFetcher } from '@/utils/fetcher/pokemonFetcher'
 
-
-export const getPokemon = async (pokemonName: string) => {
-  return await pokemonGetFetcher(`v2/pokemon/${pokemonName}`)
-
-}
 
 export const pokemonService = {
 
