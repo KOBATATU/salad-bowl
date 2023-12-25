@@ -3,7 +3,7 @@ import { prefetch } from '@/hooks/tanstack/usePrefetch'
 import { pokemonGetFetcher } from '@/utils/fetcher/pokemonFetcher'
 
 
-const getPokemon = async (pokemonName: string) => {
+export const getPokemon = async (pokemonName: string) => {
   return await pokemonGetFetcher(`v2/pokemon/${pokemonName}`)
 
 }

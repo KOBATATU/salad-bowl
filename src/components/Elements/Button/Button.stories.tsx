@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { MdAdd } from 'react-icons/md'
 import { Button } from '@/components/Elements'
+import { PCStory } from '@/test/storybook'
 
 const meta = {
   title: 'Elements/Button',
@@ -12,15 +13,17 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  ...PCStory,
   render: (args) => {
     return <div>
       <div>Default(props変更はここのみが変更されます)</div>
-      <Button {...args}>ボタン</Button>
+      <Button {...args} >ボタン</Button>
     </div>
   }
 }
 
 export const Buttons: Story = {
+  ...PCStory,
   render: ()=>{
     return (
       <div>
