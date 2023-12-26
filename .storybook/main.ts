@@ -32,6 +32,7 @@ const config: StorybookConfig = {
       "@": path.resolve(__dirname, '../src')
     }
     return config
-  }
+  },
+  staticDirs: ['../public']
 }
 export default config
