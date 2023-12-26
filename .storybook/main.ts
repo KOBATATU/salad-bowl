@@ -33,6 +33,9 @@ const config: StorybookConfig = {
     }
     return config
   },
+  features: {
+    interactionsDebugger: true,
+  },
   staticDirs: ['../public']
 }
 export default config

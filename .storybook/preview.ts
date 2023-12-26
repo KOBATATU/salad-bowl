@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import '../src/app/globals.css'
 import { initialize, mswLoader, mswDecorator } from 'msw-storybook-addon';
+import {RouterContext} from "next/dist/shared/lib/router-context";
 
 initialize()
 const preview: Preview = {
@@ -16,9 +17,16 @@ const preview: Preview = {
     // msw: {
     //   handlers: [...pokemonHandlers]
     // }
+    // 現状のnext routerのpathを定義する設定(設定はstory単位で設定する)
+    // nextRouter: {
+    //   pathname: '/my/pathname'
+    // }
   },
   decorators:[ mswDecorator ],
-  loaders: [ mswLoader ]
+  loaders: [ mswLoader ],
+  nextRouter: {
+    Provider: RouterContext.Provider
+  }
 }
 
 export default preview
