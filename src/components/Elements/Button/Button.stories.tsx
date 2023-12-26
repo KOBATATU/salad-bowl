@@ -1,12 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { MdAdd } from 'react-icons/md'
 import { Button } from '@/components/Elements'
-import { PCStory } from '@/test/storybook'
+import { PCStory, QueryClientProviderDecorator } from '@/test/storybook'
 
 const meta = {
   title: 'Elements/Button',
   component: Button,
   tags: ['autodocs'],
+  //特に意味はないけどつけてる
+  decorators: [QueryClientProviderDecorator]
 } satisfies Meta<typeof Button>
 
 export default meta
