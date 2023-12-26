@@ -14,7 +14,7 @@ export const useHover = () => {
     const node = targetRef.current
     if (node) {
       const rect = node.getBoundingClientRect()
-      setPopoverPosition({left: rect.left, top: rect.top,width: rect.width,right: rect.right})
+      setPopoverPosition({ left: rect.left, top: rect.top,width: rect.width,right: rect.right })
 
     }
 
@@ -31,17 +31,17 @@ export const useHover = () => {
 }
 
 // marginやpaddingを一応取得はできる
-//const getMarginPaddingInfo = (element: HTMLElement): ElementMarginPaddingInfo => {
-//   const computedStyle = getComputedStyle(element);
-//
-//   return {
-//     paddingTop: parseFloat(computedStyle.paddingTop),
-//     paddingBottom: parseFloat(computedStyle.paddingBottom),
-//     paddingLeft: parseFloat(computedStyle.paddingLeft),
-//     paddingRight: parseFloat(computedStyle.paddingRight),
-//     marginTop: parseFloat(computedStyle.marginTop),
-//     marginBottom: parseFloat(computedStyle.marginBottom),
-//     marginLeft: parseFloat(computedStyle.marginLeft),
-//     marginRight: parseFloat(computedStyle.marginRight),
-//   };
-// };
+export const getMarginPaddingInfo = (element: HTMLElement) => {
+  const computedStyle = getComputedStyle(element)
+
+  return {
+    paddingTop: parseFloat(computedStyle.paddingTop),
+    paddingBottom: parseFloat(computedStyle.paddingBottom),
+    paddingLeft: parseFloat(computedStyle.paddingLeft),
+    paddingRight: parseFloat(computedStyle.paddingRight),
+    marginTop: parseFloat(computedStyle.marginTop),
+    marginBottom: parseFloat(computedStyle.marginBottom),
+    marginLeft: parseFloat(computedStyle.marginLeft),
+    marginRight: parseFloat(computedStyle.marginRight),
+  }
+}
