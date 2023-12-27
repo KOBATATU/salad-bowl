@@ -35,6 +35,7 @@ export const List = forwardRef<HTMLDivElement, ComponentProps<'div'> & ListProps
     
     return (
       <div
+        role='list'
         {...rest}
         ref={ref}
         className={classNames}

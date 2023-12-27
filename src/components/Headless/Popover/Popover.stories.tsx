@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Button, List, ListItem } from '@/components/Elements'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Headless/Popover/Popover'
 import { usePopover } from '@/hooks/usePopover'
+import {useId} from "@/hooks/useId";
 
 const meta = {
   title :  'Headless/Popover',
@@ -61,22 +62,17 @@ const PopoverHook = () => {
     buttonRef,
     popoverRef,
     handleButtonClick, popoverPosition
-  } = usePopover<HTMLButtonElement>()
-
-  const popoverStyle = isVisible
-    ? {
-      left: popoverPosition.left ,
-      top: popoverPosition.height + popoverPosition.paddingTop
-    }
-    : {}
-
+  } = usePopover<HTMLButtonElement>({ type: 'bottom' })
+  const id = useId()
+  const buttonId = `${id}-開閉ボタン`
+  const popoverId = `${id}-ポップオーバー`
 
   return (
     <>
-      <Button variant='text' color='white' ref={buttonRef} onClick={handleButtonClick}>Login</Button>
-      <div hidden={!isVisible} ref={popoverRef} style={popoverStyle} className='absolute rounded-lg border bg-white'>
+      <Button aria-labelledby={buttonId} aria-describedby={'メニューの一覧'} variant='text' color='white' ref={buttonRef} onClick={handleButtonClick}>Login</Button>
+      <div id={popoverId} hidden={!isVisible} ref={popoverRef} style={popoverPosition} className='absolute rounded-lg border bg-white'>
         {isVisible &&
-          <List >
+          <List>
             <ListItem>通常のListItem</ListItem>
             <ListItem>通常のListItem</ListItem>
           </List>

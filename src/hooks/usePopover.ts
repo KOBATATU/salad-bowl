@@ -1,37 +1,51 @@
 import React from 'react'
 import { getMarginPaddingInfo } from '@/hooks/useHover'
 
-export const usePopover = <T extends HTMLElement>()=>{
+type position = {
+  left?: number
+  right?: number
+  top?: number
+  bottom?: number
+}
+type PopoverProps = {
+  type: keyof position
+}
+
+export const usePopover = <T extends HTMLElement>(props: PopoverProps)=>{
+  const { type = 'bottom' } = props
   const [isVisible, setIsVisible] = React.useState(false)
   const buttonRef = React.useRef<T>(null)
   const popoverRef = React.useRef<HTMLDivElement>(null)
-  const [popoverPosition, setPopoverPosition] = React.useState(
-    { left: 0, top: 0, width:0, height:0, paddingTop:0, paddingLeft: 0, marginLeft: 0 }
-  )
+  const [popoverPosition, setPopoverPosition] = React.useState<position>()
 
   const handleButtonClick = () => {
     setIsVisible(!isVisible)
   }
 
-  React.useLayoutEffect( () => {
+  React.useLayoutEffect(()=>{
+    const buttonNode = buttonRef.current
     const popoverNode = popoverRef.current
-    if (isVisible && buttonRef.current && popoverNode) {
-      const marginPadding = getMarginPaddingInfo(buttonRef.current)
 
-      //相対値で計算させる
+    if (isVisible && buttonNode && popoverNode) {
+      const marginPadding = getMarginPaddingInfo(buttonNode)
+      const { width, height } = popoverNode.getBoundingClientRect()
+
+      //相対値を計算
       if (buttonRef.current.offsetParent) {
-        setPopoverPosition({
-          left: buttonRef.current.offsetLeft,
-          width: buttonRef.current.offsetWidth,
-          top: buttonRef.current.offsetTop,
-          height: buttonRef.current.offsetHeight,
-          paddingTop: marginPadding.paddingTop,
-          paddingLeft: marginPadding.paddingLeft,
-          marginLeft: marginPadding.marginLeft
-        })
+        if(type === 'bottom') {
+          setPopoverPosition({
+            left: buttonNode.offsetLeft + buttonNode.offsetWidth -  width,
+            top: buttonNode.offsetHeight + marginPadding.paddingTop + marginPadding.paddingBottom
+          })
+        } else if (type === 'top') {
+          setPopoverPosition({
+            left: buttonNode.offsetLeft,
+            bottom: buttonNode.offsetHeight + marginPadding.paddingTop + marginPadding.paddingBottom
+          })
+        }
       }
     }
-  }, [buttonRef, popoverRef, isVisible])
+  }, [isVisible, type])
 
 
   React.useEffect(() => {
@@ -41,7 +55,6 @@ export const usePopover = <T extends HTMLElement>()=>{
       if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         setIsVisible(false)
       }
-
     }
 
     // イベントリスナーを設定
