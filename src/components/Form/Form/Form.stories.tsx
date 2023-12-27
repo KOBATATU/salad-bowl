@@ -1,10 +1,11 @@
+import { expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
+import { userEvent as user, waitFor, within } from '@storybook/testing-library'
 import { MdOutlineInfo } from 'react-icons/md'
 import { z } from 'zod'
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@/components/Elements'
 import { Form, FormWrapper, Input } from '@/components/Form'
 import { Alert } from '@/components/Notifications'
-
 const meta = {
   title: 'Form/Form',
   component: Form,
@@ -34,14 +35,14 @@ export const Login: Story = {
   },
   render: (args) => {
     return (
-      <Form<LoginType> schema={loginRequest} onSubmit={(data)=> console.log(data)} >
+      <Form<LoginType> schema={loginRequest} onSubmit={async (data)=> console.log(data)} >
         {({ register, formState } ) => {
           return (
             <Card className={'mx-auto w-full md:w-1/2'}>
               <CardHeader><Typography variant={'h5'} className={'text-center'}>welcome!</Typography></CardHeader>
               <CardBody>
                 <FormWrapper label={'メール'} required={true} errorMessage={formState.errors.email?.message}>
-                  <Input type={'email'} registration={register('email')} isError={!!formState.errors.email} />
+                  <Input aria-label={'email'} type={'email'} registration={register('email')} isError={!!formState.errors.email} />
                 </FormWrapper>
                 <FormWrapper label={'パスワード'} required={true} errorMessage={formState.errors.password?.message}>
                   <Input type={'password'} registration={register('password')} isError={!!formState.errors.password} />
@@ -51,13 +52,21 @@ export const Login: Story = {
                 </div>
               </CardBody>
               <CardFooter>
-                <Button>ログイン</Button>
+                <Button disabled={formState.isSubmitting}>ログイン</Button>
               </CardFooter>
             </Card>
           )
         }}
       </Form>
     )
+  },
+  play: async ({ canvasElement })=>{
+    const canvas = within(canvasElement)
+    await user.type(canvas.getByRole('textbox', { name: 'email' }), 'test@gmail.com')
+
+    await user.click(canvas.getByRole('button', { name: 'ログイン' }))
+
+    await expect(await canvas.findByText('8桁以上のパスワードを入力してください')).toBeInTheDocument()
   }
 }
 

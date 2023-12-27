@@ -5,6 +5,16 @@ const meta = {
   title: 'Form/Input',
   component: Input,
   tags: ['autodocs'],
+  parameters: {
+    //input単体であるとa11yの表記が必要であるのを無視している
+    a11y: {
+      config: {
+        rules: [{
+          id: 'label', enabled: false
+        }]
+      }
+    }
+  }
 } satisfies Meta<typeof Input>
 
 export default meta
