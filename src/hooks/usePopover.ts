@@ -13,7 +13,7 @@ export const usePopover = <T extends HTMLElement>()=>{
     setIsVisible(!isVisible)
   }
 
-  React.useEffect( () => {
+  React.useLayoutEffect( () => {
     const popoverNode = popoverRef.current
     if (isVisible && buttonRef.current && popoverNode) {
       const marginPadding = getMarginPaddingInfo(buttonRef.current)
