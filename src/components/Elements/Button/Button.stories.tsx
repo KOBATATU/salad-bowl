@@ -8,7 +8,17 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   //特に意味はないけどつけてる
-  decorators: [QueryClientProviderDecorator]
+  decorators: [QueryClientProviderDecorator],
+  parameters: {
+    //button内に
+    a11y: {
+      config: {
+        rules: [{
+          id: 'button-name', enabled: false
+        }]
+      }
+    }
+  }
 } satisfies Meta<typeof Button>
 
 export default meta

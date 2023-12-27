@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
+    "test:storybook": "test-storybook",
     "eslint": "eslint . --fix",
     "build-storybook": "storybook build"
   },
@@ -49,6 +50,7 @@
     "@storybook/jest": "^0.2.3",
     "@storybook/nextjs": "^7.3.2",
     "@storybook/react": "^7.3.2",
+    "@storybook/test-runner": "^0.16.0",
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
@@ -60,6 +62,7 @@
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "autoprefixer": "^10.4.15",
+    "axe-playwright": "^1.2.3",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "eslint-config-prettier": "^9.0.0",
