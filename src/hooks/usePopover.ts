@@ -1,7 +1,7 @@
 import React from 'react'
 import { getMarginPaddingInfo } from '@/hooks/useHover'
 
-type position = {
+export type position = {
   left?: number
   right?: number
   top?: number
@@ -55,6 +55,7 @@ export const usePopover = <T extends HTMLElement>(props: PopoverProps)=>{
       if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         setIsVisible(false)
       }
+      event.stopPropagation()
     }
 
     // イベントリスナーを設定
