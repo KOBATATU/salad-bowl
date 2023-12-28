@@ -10,6 +10,7 @@ export type position = {
 type PopoverProps = {
   type: keyof position
 }
+//align みたいにstart,center,endで場所を計算させるやり方もある
 
 export const usePopover = <T extends HTMLElement>(props: PopoverProps)=>{
   const { type = 'bottom' } = props
@@ -31,16 +32,16 @@ export const usePopover = <T extends HTMLElement>(props: PopoverProps)=>{
       const { width, height } = popoverNode.getBoundingClientRect()
 
       //相対値を計算
-      if (buttonRef.current.offsetParent) {
+      if (buttonNode.offsetParent) {
         if(type === 'bottom') {
           setPopoverPosition({
             left: buttonNode.offsetLeft + buttonNode.offsetWidth -  width,
-            top: buttonNode.offsetHeight + marginPadding.paddingTop + marginPadding.paddingBottom
+            top: buttonNode.offsetParent.clientHeight
           })
         } else if (type === 'top') {
           setPopoverPosition({
             left: buttonNode.offsetLeft,
-            bottom: buttonNode.offsetHeight + marginPadding.paddingTop + marginPadding.paddingBottom
+            bottom: buttonNode.offsetHeight
           })
         }
       }
