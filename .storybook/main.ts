@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-onboarding',
     '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
     {
       name: '@storybook/addon-styling',
       options: {
@@ -32,6 +33,10 @@ const config: StorybookConfig = {
       "@": path.resolve(__dirname, '../src')
     }
     return config
-  }
+  },
+  features: {
+    interactionsDebugger: true,
+  },
+  staticDirs: ['../public']
 }
 export default config

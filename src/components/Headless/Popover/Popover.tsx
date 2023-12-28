@@ -123,7 +123,6 @@ export const PopoverTrigger = React.forwardRef<PopoverTriggerElement, PopoverTri
     return (
       <Primitive.button
         type="button"
-        aria-label='dialog'
         aria-controls={context.contentId}
         aria-expanded={context.open}
         data-state={getState(context.open)}

@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Button, List, ListItem } from '@/components/Elements'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Headless/Popover/Popover'
 import { usePopover } from '@/hooks/usePopover'
+import {useId} from "@/hooks/useId";
 
 const meta = {
   title :  'Headless/Popover',
@@ -61,26 +62,23 @@ const PopoverHook = () => {
     buttonRef,
     popoverRef,
     handleButtonClick, popoverPosition
-  } = usePopover<HTMLButtonElement>()
-
-  const popoverStyle = isVisible
-    ? {
-      left: popoverPosition.left,
-      top: popoverPosition.top
-    }
-    : {}
+  } = usePopover<HTMLButtonElement>({ type: 'bottom' })
+  const id = useId()
+  const buttonId = `${id}-開閉ボタン`
+  const popoverId = `${id}-ポップオーバー`
 
   return (
     <>
-      <Button variant='text' color='white' ref={buttonRef} onClick={handleButtonClick}>Login</Button>
-      {isVisible &&
-        <div hidden={!isVisible} ref={popoverRef} style={popoverStyle} className='absolute rounded-lg border bg-white'>
+      <Button aria-labelledby={buttonId} aria-describedby={'メニューの一覧'} variant='text' color='white' ref={buttonRef} onClick={handleButtonClick}>Login</Button>
+      <div id={popoverId} hidden={!isVisible} ref={popoverRef} style={popoverPosition} className='absolute rounded-lg border bg-white'>
+        {isVisible &&
           <List>
             <ListItem>通常のListItem</ListItem>
             <ListItem>通常のListItem</ListItem>
           </List>
-        </div>
-      }
+        }
+      </div>
+
     </>
   )
 
@@ -89,11 +87,12 @@ const PopoverHook = () => {
 
 export const _PopoverHook: Story = {
   render: () => {
-    return (
-      <div>
-        <header >
+    return (<>
+      <div style={{ height: '1000px' }}></div>
+      <div  >
+        <header className='container mx-auto'>
           <nav className=" border-gray-200 bg-white px-4 py-2.5 dark:bg-gray-800 lg:px-6">
-            <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
+            <div className="relative mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
               <a href="https://flowbite.com" className="flex items-center">
                 <img src="https://flowbite.com/docs/images/logo.svg" className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite</span>
@@ -106,8 +105,10 @@ export const _PopoverHook: Story = {
             </div>
           </nav>
         </header>
+        <div style={{ height: '1000px' }}></div>
 
       </div>
+    </>
     )
 
   }

@@ -1,26 +1,41 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { MdAdd } from 'react-icons/md'
 import { Button } from '@/components/Elements'
+import { PCStory, QueryClientProviderDecorator } from '@/test/storybook'
 
 const meta = {
   title: 'Elements/Button',
   component: Button,
   tags: ['autodocs'],
+  //特に意味はないけどつけてる
+  decorators: [QueryClientProviderDecorator],
+  parameters: {
+    //button内に
+    a11y: {
+      config: {
+        rules: [{
+          id: 'button-name', enabled: false
+        }]
+      }
+    }
+  }
 } satisfies Meta<typeof Button>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  ...PCStory,
   render: (args) => {
     return <div>
       <div>Default(props変更はここのみが変更されます)</div>
-      <Button {...args}>ボタン</Button>
+      <Button {...args} >ボタン</Button>
     </div>
   }
 }
 
 export const Buttons: Story = {
+  ...PCStory,
   render: ()=>{
     return (
       <div>

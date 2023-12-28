@@ -93,6 +93,7 @@ export const ListItem = forwardRef<HTMLDivElement, ComponentProps<'div'> & ListI
 
     return (
       <div
+        role="listitem"
         {...rest}
         ref={ref}
         className={classNames}

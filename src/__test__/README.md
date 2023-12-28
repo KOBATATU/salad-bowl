@@ -1,0 +1,1 @@
+https://zenn.dev/hanpenman/scraps/874cfbac3ddd80

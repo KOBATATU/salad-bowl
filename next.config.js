@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    reactRemoveProperties: {
+      properties: ['^data-testid$']
+    }
+  },
   async rewrites() {
     return [
       {

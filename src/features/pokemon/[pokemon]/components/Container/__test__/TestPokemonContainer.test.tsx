@@ -1,14 +1,24 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { screen } from '@testing-library/dom'
 import { render } from '@testing-library/react'
+import { pokemonHandlers } from '@/domain/pokemon/__mock__/handlers'
 import { PokemonContainer } from '@/features/pokemon/[pokemon]/components/Container/PokemonContainer'
+import { setupMockServer } from '@/test/jest'
+import { TestQueryClientProvider } from '@/test/provider'
 
-const queryClient = new QueryClient()
+setupMockServer(...pokemonHandlers)
+
+const setup = async ()=>{
+  render(<TestQueryClientProvider>
+    <PokemonContainer params={{ pokemonName: 'pickachu' }} />
+  </TestQueryClientProvider>)
+  
+}
+
 describe('レンダリングテスト', () => {
   test('APIをhook経由で呼び出せるか', async () =>{
-    render(<QueryClientProvider client={queryClient}>
-      <PokemonContainer params={{ pokemonName: 'pickachu' }} />
-    </QueryClientProvider>)
+    //given
+    await setup()
+
     expect(await screen.findByText('25')).toBeInTheDocument()
   })
 })

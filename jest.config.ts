@@ -6,7 +6,7 @@ const customJestConfig = {
   setupFiles: ['./jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleDirectories: ['node_modules', '<rootDir>/src'],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   testEnvironmentOptions: {
     customExportConditions: [''],
   },

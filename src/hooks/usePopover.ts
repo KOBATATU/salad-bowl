@@ -1,30 +1,52 @@
 import React from 'react'
+import { getMarginPaddingInfo } from '@/hooks/useHover'
 
-export const usePopover = <T extends HTMLElement>()=>{
+export type position = {
+  left?: number
+  right?: number
+  top?: number
+  bottom?: number
+}
+type PopoverProps = {
+  type: keyof position
+}
+//align みたいにstart,center,endで場所を計算させるやり方もある
+
+export const usePopover = <T extends HTMLElement>(props: PopoverProps)=>{
+  const { type = 'bottom' } = props
   const [isVisible, setIsVisible] = React.useState(false)
   const buttonRef = React.useRef<T>(null)
   const popoverRef = React.useRef<HTMLDivElement>(null)
-  const [popoverPosition, setPopoverPosition] = React.useState({ left: 0, top: 0 })
+  const [popoverPosition, setPopoverPosition] = React.useState<position>()
 
   const handleButtonClick = () => {
     setIsVisible(!isVisible)
   }
 
-  React.useEffect( () => {
+  React.useLayoutEffect(()=>{
+    const buttonNode = buttonRef.current
     const popoverNode = popoverRef.current
-    if (isVisible && buttonRef.current && popoverNode) {
 
-      const rect = buttonRef.current.getBoundingClientRect()
-      const popoverRect = popoverNode.getBoundingClientRect()
+    if (isVisible && buttonNode && popoverNode) {
+      const marginPadding = getMarginPaddingInfo(buttonNode)
+      const { width, height } = popoverNode.getBoundingClientRect()
 
-      setPopoverPosition({
-        left: rect.left ,
-        top: rect.top
-      })
+      //相対値を計算
+      if (buttonNode.offsetParent) {
+        if(type === 'bottom') {
+          setPopoverPosition({
+            left: buttonNode.offsetLeft + buttonNode.offsetWidth -  width,
+            top: buttonNode.offsetParent.clientHeight
+          })
+        } else if (type === 'top') {
+          setPopoverPosition({
+            left: buttonNode.offsetLeft,
+            bottom: buttonNode.offsetHeight
+          })
+        }
+      }
     }
-
-
-  }, [buttonRef, popoverRef, isVisible])
+  }, [isVisible, type])
 
 
   React.useEffect(() => {
@@ -34,7 +56,7 @@ export const usePopover = <T extends HTMLElement>()=>{
       if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
         setIsVisible(false)
       }
-
+      event.stopPropagation()
     }
 
     // イベントリスナーを設定
