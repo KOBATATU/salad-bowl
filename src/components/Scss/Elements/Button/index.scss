@@ -1,0 +1,90 @@
+@use '../../../../styles' as *;
+
+.btn {
+  @extend .sass-flex;
+  align-items: center;
+  gap: 5px;
+  vertical-align: middle;
+  user-select: none;
+  font-family: sans-serif;
+
+
+
+  &--variant {
+    &--primary {
+      color: $cWhite;
+      background-color: $cBgBlue;
+      box-shadow: $shadowMd;
+      &:hover {
+        box-shadow: $shadowLg;
+      }
+      &:active {
+        opacity: 0.85;
+        box-shadow: none;
+      }
+    }
+    &--danger {
+      color: $cWhite;
+      background-color: $cBgRed;
+      box-shadow: $shadowMd;
+      &:hover {
+        box-shadow: $shadowLg;
+      }
+      &:active {
+        opacity: 0.85;
+        box-shadow: none;
+      }
+    }
+    &--white {
+      color: $cBlack;
+      background-color: $cWhite;
+      border: solid 0.5px $cBlack;
+      box-shadow: $shadowMd;
+      &:hover {
+        opacity: 0.7;
+        box-shadow: $shadowLg;
+      }
+      &:active {
+        background-color: $cBgGray;
+        box-shadow: none;
+      }
+    }
+    &--text{
+      color: $cBlack;
+      background-color: $cWhite;
+      &:hover {
+        opacity: 0.7;
+        background-color: $cBgGray;
+      }
+
+    }
+
+  }
+
+  &--size {
+    @extend .font-md;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    &--sm {
+      padding: 0.5rem 0.8rem;
+    }
+    &--md{
+      padding: 0.75rem 1.2rem;
+    }
+    &--lg {
+      @extend .font-lr;
+      padding: 0.875rem 1.45rem;
+    }
+  }
+
+  &--square {
+    border-radius: 0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+}

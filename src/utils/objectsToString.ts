@@ -17,3 +17,7 @@ function objectsToArray(object: object) {
 export function objectsToString(object: object) {
   return objectsToArray(object).join(' ')
 }
+
+export function joinWithSpace(...args: string[]): string {
+  return args.join(' ')
+}
