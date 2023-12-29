@@ -110,8 +110,7 @@ jobs:
       # https://github.com/reg-viz/reg-suit#workaround-for-detached-head
       - name: workaround for detached HEAD
         run: |
-          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/}
-
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/} && git pull
       - name: Run Storycap
         run: npm run vrt:snapshot
       - name: Run reg-suit
