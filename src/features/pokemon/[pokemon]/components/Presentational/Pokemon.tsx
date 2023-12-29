@@ -20,6 +20,7 @@ export const Pokemon = ({ data }: PokemonProps) => {
         <PopoverExample/>
       </div>
 
+      <Button variant={'primary'}  prefixIcon={<MdAdd />} >ボタン</Button>
       
 
     </div>
@@ -27,7 +28,9 @@ export const Pokemon = ({ data }: PokemonProps) => {
 }
 
 import React, { useState } from 'react'
-import './popover.css' // スタイルは必要に応じて調整してください
+import './popover.css'
+import { Button } from '@/components/Scss/Elements/Button/Button'
+import {MdAdd} from "react-icons/md"; // スタイルは必要に応じて調整してください
 
 const PopoverExample: React.FC = () => {
   const [isPopoverVisible, setPopoverVisible] = useState(false)
