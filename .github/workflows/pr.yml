@@ -108,8 +108,10 @@ jobs:
       - name: Install Fonts
         run: sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho
       # https://github.com/reg-viz/reg-suit#workaround-for-detached-head
-      - name: checkout
-        run: git checkout $CI_COMMIT_REF_NAME || git checkout -b $CI_COMMIT_REF_NAME && git pull
+      - name: workaround for detached HEAD
+        run: |
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/}
+
       - name: Run Storycap
         run: npm run vrt:snapshot
       - name: Run reg-suit
