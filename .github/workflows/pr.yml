@@ -5,35 +5,46 @@ on:
     branches:
       - main
 
+env:
+  REG_NOTIFY_CLIENT_ID: ${{ secrets.REG_NOTIFY_CLIENT_ID }}
+  AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+
 jobs:
-  test-build:
+  install:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v4
-
-      - name: 'Setup node'
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: 'Cache npm dependencies'
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: node_modules_cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.node_modules_cache.outputs.cache-hit != 'true'
+        run: npm install
+  unit-test:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Restore node_modules
+        id: node_modules_cache
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: 'Install Dependencies'
-        run: npm install
-
-      - name: 'Run Tests'
-        run:  npm run test
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Run Unit Tests
+        run: npm run test
         env:
           API_POKEMON: 'https://pokeapi.co/api'
           MY_HOSTNAME: 'http://localhost:3000'
-
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         # jobが失敗してもtest結果をartifactsに送りたいめ常に実行
@@ -42,3 +53,66 @@ jobs:
           name: test-coverage
           path: __reports__/**
           retention-days: 5
+  build-storybook:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Restore node_modules
+        id: node_modules_cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Cache Storybook
+        uses: actions/cache@v3
+        id: storybook_cache
+        with:
+          path: storybook-static
+          key: ${{ runner.os }}-${{ github.sha }}
+      - name: Build Storybook
+        if: steps.storybook_cache.outputs.cache-hit != 'true'
+        run: npm run build-storybook
+
+  vrt-storybook:
+    needs: build-storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # この指定がないと比較に失敗する
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Restore node_modules
+        id: node_modules_cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Restore Storybook
+        id: storybook_cache
+        uses: actions/cache@v3
+        with:
+          path: storybook-static
+          key: ${{ runner.os }}-${{ github.sha }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - name: Install Fonts
+        run: sudo apt-get install fonts-ipafont-gothic fonts-ipafont-mincho
+      # https://github.com/reg-viz/reg-suit#workaround-for-detached-head
+      - name: workaround for detached HEAD
+        run: |
+          git checkout ${GITHUB_REF#refs/heads/} || git checkout -b ${GITHUB_REF#refs/heads/}
+
+      - name: Run Storycap
+        run: npm run vrt:snapshot
+      - name: Run reg-suit
+        run: npm run vrt:run

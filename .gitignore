@@ -151,4 +151,4 @@ storybook-static/*
 .env
 
 # reports
-__reports__
+__reports__.reg
