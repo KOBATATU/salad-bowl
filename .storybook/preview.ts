@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react'
 import '../src/app/globals.css'
 import { initialize, mswLoader, mswDecorator } from 'msw-storybook-addon';
 import {RouterContext} from "next/dist/shared/lib/router-context";
+import {withScreenshot} from "storycap";
 
 initialize()
 const preview: Preview = {
@@ -22,7 +23,7 @@ const preview: Preview = {
     //   pathname: '/my/pathname'
     // }
   },
-  decorators:[ mswDecorator ],
+  decorators:[ mswDecorator, withScreenshot ],
   loaders: [ mswLoader ],
   nextRouter: {
     Provider: RouterContext.Provider
