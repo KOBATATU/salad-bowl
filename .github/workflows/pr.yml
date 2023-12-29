@@ -1,9 +1,6 @@
 name: pr
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [push]
 
 env:
   REG_NOTIFY_CLIENT_ID: ${{ secrets.REG_NOTIFY_CLIENT_ID }}
