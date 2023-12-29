@@ -1,8 +1,8 @@
 export const variants = {
   contained: {
     primary: {
-      color: 'text-white bg-blue-500',
-      shadow: 'shadow-md',
+      // color: 'text-white bg-blue-500',
+      // shadow: 'shadow-md',
       hover: 'hover:shadow-lg',
       active: 'active:opacity-[0.85] active:shadow-none',
     },
