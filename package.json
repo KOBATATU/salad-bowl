@@ -13,9 +13,13 @@
     "eslint": "eslint . --fix",
     "build-storybook": "storybook build",
     "vrt:snapshot": "storycap --serverCmd \"npx http-server storybook-static -a localhost -p 6006\" http://localhost:6006",
-    "vrt:run": "reg-suit run"
+    "vrt:run": "reg-suit run",
+    "gql:compile": "graphql-codegen --config ./src/graphql/codegen-client.yml",
+    "gql:watch": "graphql-codegen -w"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "@apollo/experimental-nextjs-app-support": "^0.5.2",
     "@auth/prisma-adapter": "^1.0.5",
     "@headlessui/react": "^1.7.17",
     "@hookform/resolvers": "^3.2.0",
@@ -43,6 +47,11 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-graphql-request": "^6.1.0",
+    "@graphql-codegen/typescript-resolvers": "^4.0.1",
     "@storybook/addon-a11y": "^7.6.6",
     "@storybook/addon-essentials": "^7.3.2",
     "@storybook/addon-interactions": "^7.3.2",
